@@ -16,7 +16,7 @@ const HeaderContainer = styled.header`
   justify-content: space-between;
   align-items: center;
   padding: 0 5%;
-  background: #fff;
+  background: rgba(255,255,255,0.9);
   box-shadow: ${({ scrolled }) =>
     scrolled ? "0 3px 35px rgba(0, 0, 0, 0.19)" : "none"};
   transition: box-shadow 400ms;

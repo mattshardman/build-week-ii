@@ -1,6 +1,7 @@
 {
     "version": 2,
-    "name": "todo",
+    "name": "photo-it",
+    "alias": "photo-it",
     "builds": [
         { "src": "package.json", "use": "@now/static-build", "config": { "distDir": "build" } }
     ],

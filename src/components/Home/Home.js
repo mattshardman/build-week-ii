@@ -9,6 +9,31 @@ const Container = styled.div`
   padding-top: 100px;
 `;
 
+const LoadingImage = styled.img`
+  animation-name: spin;
+  animation-duration: 500ms;
+  animation-iteration-count: infinite;
+  animation-timing-function: linear;
+
+  @keyframes spin {
+    from {
+      transform: rotate(0deg);
+    }
+
+    to {
+      transform: rotate(360deg);
+    }
+  }
+`;
+
+const LoadingContainer = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  width: 100%;
+`;
+
 function Home({ db, user }) {
   const [photos, setPhotos] = useState();
 
@@ -28,7 +53,15 @@ function Home({ db, user }) {
   }, []);
 
   if (!photos) {
-    return <div>Loading...</div>;
+    return (
+      <LoadingContainer>
+        <LoadingImage
+          src="https://image.flaticon.com/icons/svg/148/148813.svg"
+          alt=""
+          height={35}
+        />
+      </LoadingContainer>
+    );
   }
   return (
     <Container>
