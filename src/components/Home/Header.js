@@ -1,6 +1,7 @@
 import React from "react";
-import PropTypes from 'prop-types';
+import PropTypes from "prop-types";
 import styled from "styled-components";
+import { Link } from "react-router-dom";
 
 const HeaderContainer = styled.header`
   position: fixed;
@@ -35,15 +36,18 @@ const Avatar = styled.div`
 `;
 
 function Header({ logOut, user }) {
-  console.log(user.photoURL)
   return (
     <HeaderContainer>
-      <h2>Hi</h2>
+      <Link to="/" style={{ fontFamily: 'Sniglet, cursive', textDecoration: 'none', color: '#000' }}>
+        <h2 >Photo Spot</h2>
+      </Link>
       <Icons>
-      <Avatar>
-        <img src={user.photoURL} alt="" height="100%" />
-      </Avatar>
-      <button onClick={logOut}>LOG OUT</button>
+        <Link to="/my-home">
+          <Avatar>
+            <img src={user.photoURL} alt="" height="100%" />
+          </Avatar>
+        </Link>
+        <button onClick={logOut}>LOG OUT</button>
       </Icons>
     </HeaderContainer>
   );
@@ -51,7 +55,7 @@ function Header({ logOut, user }) {
 
 Header.propTypes = {
   logOut: PropTypes.func.isRequired,
-  user: PropTypes.shape().isRequired,
-}
+  user: PropTypes.shape().isRequired
+};
 
 export default Header;

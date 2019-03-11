@@ -7,10 +7,7 @@ const CardsContainer = styled.section`
   width: 100%;
   display: flex;
   flex-wrap: wrap;
-  padding: 0 5%;
-  padding-top: 120px;
   background: #fcfdff;
-  min-height: 100vh;
 `;
 
 function Cards({ photos }) {

@@ -1,5 +1,13 @@
 import React, { useState, useEffect } from "react";
+import styled from "styled-components";
 import Cards from "./Cards";
+
+const Container = styled.div`
+  box-sizing: border-box;
+  min-height: 100vh;
+  padding: 0 5%;
+  padding-top: 120px;
+`;
 
 function Home({ db, user }) {
   const [photos, setPhotos] = useState();
@@ -19,14 +27,13 @@ function Home({ db, user }) {
       });
   }, []);
 
-
   if (!photos) {
     return <div>Loading...</div>;
   }
   return (
-    <>
+    <Container>
       <Cards photos={photos} />
-    </>
+    </Container>
   );
 }
 
