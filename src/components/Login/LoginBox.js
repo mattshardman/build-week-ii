@@ -1,5 +1,7 @@
 import React from "react";
+import { connect } from 'react-redux';
 import styled from "styled-components";
+import { logIn } from '../../actions';
 
 const LoginBoxContainer = styled.section`
   height: 400px;
@@ -23,12 +25,13 @@ const GoogleButton = styled.button`
   cursor: pointer;
 `;
 
-function LoginBox() {
+function LoginBox(props) {
+  console.log(props)
   return (
     <LoginBoxContainer>
-      <GoogleButton>Login With Google</GoogleButton>
+      <GoogleButton onClick={props.logIn}>Login With Google</GoogleButton>
     </LoginBoxContainer>
   );
 }
 
-export default LoginBox;
+export default connect(st => st,{ logIn })(LoginBox);
