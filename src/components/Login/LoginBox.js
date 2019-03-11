@@ -1,7 +1,6 @@
 import React from "react";
-import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 import styled from "styled-components";
-import { logIn } from '../../actions';
 
 const LoginBoxContainer = styled.section`
   height: 400px;
@@ -25,13 +24,18 @@ const GoogleButton = styled.button`
   cursor: pointer;
 `;
 
-function LoginBox(props) {
-  console.log(props)
+function LoginBox({logIn, loading}) {
   return (
     <LoginBoxContainer>
-      <GoogleButton onClick={props.logIn}>Login With Google</GoogleButton>
+      {loading && <div style={{ width: '100%', height: 70, background: 'red'}}>hi</div>}
+      <GoogleButton onClick={logIn}>Login With Google</GoogleButton>
     </LoginBoxContainer>
   );
 }
 
-export default connect(st => st,{ logIn })(LoginBox);
+LoginBox.propTypes = {
+  logIn: PropTypes.func.isRequired,
+  loading: PropTypes.bool.isRequired,
+}
+
+export default LoginBox;
