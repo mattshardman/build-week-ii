@@ -1,12 +1,13 @@
 import React from 'react';
 import Header from './Header';
 import withLogin from '../loginHOC';
+import Cards from './Cards';
 
 function Home(props) {
-    console.log(props)
     return(
         <>
-            <Header logOut={props.logOut} />
+            <Header {...props} />
+            <Cards />
         </>
     )
 }
