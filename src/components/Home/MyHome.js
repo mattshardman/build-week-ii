@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from "react";
 import Cards from "./Cards";
 
-function Home({ db, user }) {
+function MyHome({ db, user }) {
   const [photos, setPhotos] = useState();
 
   useEffect(() => {
     db.collection("photos")
+      .where("email", "==", user.email)
       .get()
       .then(querySnapshot => {
         const pts = [];
@@ -19,7 +20,6 @@ function Home({ db, user }) {
       });
   }, []);
 
-
   if (!photos) {
     return <div>Loading...</div>;
   }
@@ -30,4 +30,4 @@ function Home({ db, user }) {
   );
 }
 
-export default Home;
+export default MyHome;

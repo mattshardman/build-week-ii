@@ -4,6 +4,7 @@ import Home from "./components/Home/Home";
 import AddContent from "./components/Home/AddContent";
 import withLogin from "./components/loginHOC";
 import Header from "./components/Home/Header";
+import MyHome from "./components/Home/MyHome";
 
 class App extends Component {
   render() {
@@ -12,6 +13,7 @@ class App extends Component {
         <>
           <Header {...this.props} />
           <Route exact path="/" render={props => <Home {...props} {...this.props} />} />
+          <Route exact path="/my-home" render={props => <MyHome {...props} {...this.props} />} />
           <Route path="/add" render={props => <AddContent {...props} {...this.props} />} />
         </>
       </Router>
