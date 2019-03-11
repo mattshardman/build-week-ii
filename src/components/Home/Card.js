@@ -45,7 +45,13 @@ function Card({ user, name, photo }) {
       </MainCard>
       <UserInfo>
         {name[0].toUpperCase()}
-        {name.slice(1)} by&nbsp;<Link to={`/user/${user}`} style={{ textDecoration: 'none', color: 'blue' }}>{user}</Link>
+        {name.slice(1)} by&nbsp;
+        <Link
+          to={`/user/${user}`}
+          style={{ textDecoration: "none", color: "#ff0080" }}
+        >
+          {user}
+        </Link>
       </UserInfo>
     </CardContainer>
   );
