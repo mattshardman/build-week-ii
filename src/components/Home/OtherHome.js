@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 import styled from "styled-components";
 import Cards from "./Cards";
 
@@ -9,11 +10,12 @@ const Container = styled.div`
   padding-top: 120px;
 `;
 
-function Home({ db, user }) {
+function OtherHome({ db, user, match }) {
   const [photos, setPhotos] = useState();
 
   useEffect(() => {
     db.collection("photos")
+      .where("user", "==", match.params.id)
       .get()
       .then(querySnapshot => {
         const pts = [];
@@ -22,7 +24,7 @@ function Home({ db, user }) {
         });
         setPhotos(pts);
       })
-      .catch(function(error) {
+      .catch(error => {
         console.log("Error getting documents: ", error);
       });
   }, []);
@@ -37,4 +39,4 @@ function Home({ db, user }) {
   );
 }
 
-export default Home;
+export default OtherHome;

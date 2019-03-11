@@ -1,22 +1,23 @@
-import React from 'react';
-import styled from 'styled-components';
-import Card from './Card';
+import React from "react";
+import styled from "styled-components";
+import Card from "./Card";
 
 const CardsContainer = styled.section`
-    width: 100%;
-    display: flex;
-    padding: 0 5%;
-    padding-top: 120px;
-    background: #fcfdff;
-    min-height: 100vh;
+  box-sizing: border-box;
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  background: #fcfdff;
 `;
 
-function Cards() {
-    return (
-        <CardsContainer>
-            <Card />     
-        </CardsContainer>
-    )
+function Cards({ photos }) {
+  return (
+    <CardsContainer>
+      {photos.map(photo => (
+        <Card {...photo} />
+      ))}
+    </CardsContainer>
+  );
 }
 
 export default Cards;
