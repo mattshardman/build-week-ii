@@ -6,7 +6,7 @@ const Container = styled.div`
   box-sizing: border-box;
   min-height: 100vh;
   padding: 0 5%;
-  padding-top: 120px;
+  padding-top: 100px;
 `;
 
 function Home({ db, user }) {

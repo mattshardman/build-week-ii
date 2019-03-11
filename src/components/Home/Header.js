@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
@@ -17,7 +17,14 @@ const HeaderContainer = styled.header`
   align-items: center;
   padding: 0 5%;
   background: #fff;
-  box-shadow: 0 3px 35px rgba(0, 0, 0, 0.19);
+  box-shadow: ${({ scrolled }) =>
+    scrolled ? "0 3px 35px rgba(0, 0, 0, 0.19)" : "none"};
+  transition: box-shadow 400ms;
+`;
+
+const Title = styled.h2`
+  opacity: ${({scrolled}) => scrolled ? 0 : 1};
+  transition: opacity 400ms;
 `;
 
 const Icons = styled.div`
@@ -44,17 +51,37 @@ const Avatar = styled.div`
 `;
 
 function Header({ logOut, user }) {
+  const [scrolled, setScrolled] = useState(false);
+
+  useEffect(() => {
+    document.addEventListener("scroll", () => {
+      if (window.scrollY > 20) {
+        setScrolled(true);
+      } else {
+        setScrolled(false);
+      }
+    });
+  }, []);
+
   return (
-    <HeaderContainer>
+    <HeaderContainer scrolled={scrolled}>
       <Link
         to="/"
         style={{
           fontFamily: "Sniglet, cursive",
           textDecoration: "none",
-          color: "#000"
+          color: "#000",
+          display: "flex",
+          alignItems: "center"
         }}
       >
-        <h2>Photo Spot</h2>
+        <img
+          src="https://image.flaticon.com/icons/svg/148/148813.svg"
+          alt=""
+          height={35}
+          style={{ marginRight: 10 }}
+        />
+       <Title scrolled={scrolled}>Photo Spot</Title>
       </Link>
       <Icons>
         <Link
@@ -67,7 +94,7 @@ function Header({ logOut, user }) {
             alignItems: "center"
           }}
         >
-          <i className="material-icons" style={{ margin: 0, fontSize: 25 }}>
+          <i className="material-icons" style={{ margin: 0, fontSize: 20 }}>
             home
           </i>
         </Link>
@@ -81,7 +108,7 @@ function Header({ logOut, user }) {
             alignItems: "center"
           }}
         >
-          <i className="material-icons" style={{ margin: 0, fontSize: 25 }}>
+          <i className="material-icons" style={{ margin: 0, fontSize: 20 }}>
             cloud_upload
           </i>
         </Link>

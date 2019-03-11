@@ -3,20 +3,27 @@ import { Link } from "react-router-dom";
 import styled from "styled-components";
 import Cards from "./Cards";
 import Button from "../Button";
+import UserInfo from "./UserInfo";
 
 const Container = styled.div`
   box-sizing: border-box;
   min-height: 100vh;
   padding: 0 5%;
-  padding-top: 120px;
+  padding-top: 100px;
 `;
 
 const AddBar = styled.div`
-  height: 60px;
+  height: 40px;
   width: 100%;
   display: flex;
-  justify-content: center;
+  justify-content: flex-start;
+  padding: 0 15px;
   align-items: center;
+`;
+
+const MainContent = styled.div`
+  display: flex;
+  margin: 0px 15px;
 `;
 
 function MyHome({ db, user }) {
@@ -48,7 +55,10 @@ function MyHome({ db, user }) {
           <Button label="Add photo" />
         </Link>
       </AddBar>
+    <MainContent>
+      <UserInfo />
       <Cards photos={photos} />
+      </MainContent>
     </Container>
   );
 }
