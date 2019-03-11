@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from "react";
-import { auth, initializeApp } from "firebase";
-import { firestore } from 'firebase';
+import { auth, initializeApp, firestore, storage } from "firebase";
 
 import { config } from "../config/config";
 import Login from "./Login/Login";
 
 initializeApp(config);
 const db = firestore();
+const store = storage();
 const provider = new auth.GoogleAuthProvider();
 
 const withLogin = Component => {
@@ -37,7 +37,15 @@ const withLogin = Component => {
     });
 
     if (user) {
-      return <Component user={user} logOut={logOut} {...props} db={db} />;
+      return (
+        <Component
+          user={user}
+          logOut={logOut}
+          {...props}
+          db={db}
+          storage={store}
+        />
+      );
     }
 
     return <Login logIn={login} {...props} user={user} loading={loading} />;

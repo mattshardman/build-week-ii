@@ -10,7 +10,7 @@ const AddContainer = styled.div`
   align-items: center;
 `;
 
-function AddContent({ db, user }) {
+function AddContent({ db, storage, user }) {
   const [title, setTitle] = useState("");
   const [url, setUrl] = useState("");
 
@@ -23,10 +23,10 @@ function AddContent({ db, user }) {
         name: title,
         photo: url
       })
-      .then(function() {
+      .then(() => {
         console.log("Document successfully written!");
       })
-      .catch(function(error) {
+      .catch((error) => {
         console.error("Error writing document: ", error);
       });
   };

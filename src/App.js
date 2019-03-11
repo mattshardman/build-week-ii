@@ -5,6 +5,7 @@ import AddContent from "./components/Home/AddContent";
 import withLogin from "./components/loginHOC";
 import Header from "./components/Home/Header";
 import MyHome from "./components/Home/MyHome";
+import OtherHome from "./components/Home/OtherHome";
 
 class App extends Component {
   render() {
@@ -13,8 +14,9 @@ class App extends Component {
         <>
           <Header {...this.props} />
           <Route exact path="/" render={props => <Home {...props} {...this.props} />} />
+          <Route path="/user/:id" render={props => <OtherHome {...props} {...this.props} />} />
           <Route exact path="/my-home" render={props => <MyHome {...props} {...this.props} />} />
-          <Route path="/add" render={props => <AddContent {...props} {...this.props} />} />
+          <Route exact path="/add" render={props => <AddContent {...props} {...this.props} />} />
         </>
       </Router>
     );

@@ -10,20 +10,12 @@ const Container = styled.div`
   padding-top: 120px;
 `;
 
-const AddBar = styled.div`
-  height: 60px;
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-`;
-
-function MyHome({ db, user }) {
+function OtherHome({ db, user, match }) {
   const [photos, setPhotos] = useState();
 
   useEffect(() => {
     db.collection("photos")
-      .where("email", "==", user.email)
+      .where("user", "==", match.params.id)
       .get()
       .then(querySnapshot => {
         const pts = [];
@@ -42,14 +34,9 @@ function MyHome({ db, user }) {
   }
   return (
     <Container>
-      <AddBar>
-        <Link to="/add">
-          <button>Add photo</button>
-        </Link>
-      </AddBar>
       <Cards photos={photos} />
     </Container>
   );
 }
 
-export default MyHome;
+export default OtherHome;
