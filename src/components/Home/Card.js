@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 const CardContainer = styled.div`
   height: 350px;
   width: 400px;
-  margin: 15px;
+  margin: 10px;
   display: flex;
   flex-direction: column;
 `;
@@ -15,7 +15,7 @@ const MainCard = styled.div`
   height: 300px;
   width: 100%;
   box-shadow: 0 3px 25px rgba(0, 0, 0, 0.19);
-  padding: 15px;
+  padding: 10px;
   background: #fff;
 `;
 

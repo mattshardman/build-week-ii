@@ -7,14 +7,16 @@ import Login from "./Login/Login";
 initializeApp(config);
 const db = firestore();
 const store = storage();
-const provider = new auth.GoogleAuthProvider();
+const googleProvider = new auth.GoogleAuthProvider();
+const fbProvider = new auth.FacebookAuthProvider();
 
 const withLogin = Component => {
   const WithLogin = props => {
     const [loading, setLoading] = useState(false);
     const [user, setUser] = useState(false);
 
-    const login = () => {
+    const login = (loginType) => {
+      const provider = loginType === 'fb' ? fbProvider : googleProvider;
       setLoading(true);
       auth()
         .signInWithPopup(provider)

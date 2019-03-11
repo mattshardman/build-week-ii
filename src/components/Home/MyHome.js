@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 import Cards from "./Cards";
+import Button from "../Button";
 
 const Container = styled.div`
   box-sizing: border-box;
@@ -44,7 +45,7 @@ function MyHome({ db, user }) {
     <Container>
       <AddBar>
         <Link to="/add">
-          <button>Add photo</button>
+          <Button label="Add photo" />
         </Link>
       </AddBar>
       <Cards photos={photos} />

@@ -1,5 +1,5 @@
 import React from "react";
-import PropTypes from 'prop-types';
+import PropTypes from "prop-types";
 import styled from "styled-components";
 
 const LoginBoxContainer = styled.section`
@@ -14,28 +14,36 @@ const LoginBoxContainer = styled.section`
   align-items: center;
 `;
 
-const GoogleButton = styled.button`
+const LoginButton = styled.button`
   height: 40px;
   width: 200px;
   border-radius: 3px;
-  background: crimson;
+  background: ${({ background }) => background};
+  margin: 10px 0;
   color: #fff;
   border: none;
   cursor: pointer;
 `;
 
-function LoginBox({logIn, loading}) {
+function LoginBox({ logIn, loading }) {
   return (
     <LoginBoxContainer>
-      {loading && <div style={{ width: '100%', height: 70, background: 'red'}}>hi</div>}
-      <GoogleButton onClick={logIn}>Login With Google</GoogleButton>
+      {loading && (
+        <div style={{ width: "100%", height: 70, background: "red" }}>hi</div>
+      )}
+      <LoginButton background="#3b5998" onClick={() => logIn("fb")}>
+        Login With Facebook
+      </LoginButton>
+      <LoginButton background="crimson" onClick={logIn}>
+        Login With Google
+      </LoginButton>
     </LoginBoxContainer>
   );
 }
 
 LoginBox.propTypes = {
   logIn: PropTypes.func.isRequired,
-  loading: PropTypes.bool.isRequired,
-}
+  loading: PropTypes.bool.isRequired
+};
 
 export default LoginBox;

@@ -2,10 +2,11 @@ import React from 'react';
 import styled from 'styled-components';
 
 const ButtonWrapper = styled.button`
-    width: 120px;
+    width: 100px;
     height: 40px;
     background: none;
     border: none;
+    outline: none;
     cursor: pointer;
 
     :hover {

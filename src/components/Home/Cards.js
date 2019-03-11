@@ -4,10 +4,10 @@ import Card from "./Card";
 
 const CardsContainer = styled.section`
   box-sizing: border-box;
-  width: 100%;
   display: flex;
   flex-wrap: wrap;
   background: #fcfdff;
+  margin: 0 15px;
 `;
 
 function Cards({ photos }) {
