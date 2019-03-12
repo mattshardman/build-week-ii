@@ -7,7 +7,6 @@ import AddContent from "./components/Home/AddContent";
 import withLogin from "./components/withLogin";
 import Header from "./components/Home/Header";
 import MyHome from "./components/Home/MyHome";
-import OtherHome from "./components/Home/OtherHome";
 
 const AppContainer = styled.div`
   width: 100%;
@@ -28,7 +27,7 @@ class App extends Component {
           />
           <Route
             path="/user/:id"
-            render={props => <OtherHome {...props} {...this.props} />}
+            render={props => <Home {...props} {...this.props} />}
           />
           <Route
             exact

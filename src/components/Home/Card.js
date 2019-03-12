@@ -1,9 +1,10 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 import Button from "../Button";
 
 const CardContainer = styled.div`
+  position: relative;
   height: 350px;
   width: 400px;
   margin: 10px;
@@ -42,20 +43,12 @@ const DeleteButton = styled.button`
   background: none;
   border: none;
   cursor: pointer;
+  outline: none;
+  text-decoration: none;
 `;
 
-function Card({ user, name, photo, db, canDelete }) {
-  const deleteItem = () => {
-    db.collection("photos")
-      .doc(name)
-      .delete()
-      .then(function() {
-        console.log("Document successfully deleted!");
-      })
-      .catch(function(error) {
-        console.error("Error removing document: ", error);
-      });
-  };
+function Card({ id, imageId, user, name, photo, db, deleteImage, canDelete }) {
+  const [deleteItem, setDeleteItem] = useState(false);
 
   return (
     <CardContainer>
@@ -67,22 +60,41 @@ function Card({ user, name, photo, db, canDelete }) {
           {name[0].toUpperCase()}
           {name.slice(1)} by&nbsp;
           <Link
-            to={`/user/${user}`}
+            to={`/user/${id}`}
             style={{ textDecoration: "none", color: "#ff0080" }}
           >
             {user}
           </Link>
         </div>
         {canDelete && (
-          <DeleteButton>
-            <i
-              onClick={deleteItem}
-              style={{ fontSize: 18 }}
-              className="material-icons"
-            >
-              delete
-            </i>
-          </DeleteButton>
+          <div>
+            <DeleteButton>
+              <i
+                onClick={
+                  deleteItem
+                    ? () => deleteImage(imageId)
+                    : () => setDeleteItem(true)
+                }
+                style={{ fontSize: 18, color: deleteItem ? "red" : "#000" }}
+                className="material-icons"
+              >
+              edit
+              </i>
+            </DeleteButton>
+            <DeleteButton>
+              <i
+                onClick={
+                  deleteItem
+                    ? () => deleteImage(imageId)
+                    : () => setDeleteItem(true)
+                }
+                style={{ fontSize: 18, color: deleteItem ? "red" : "#000" }}
+                className="material-icons"
+              >
+                delete
+              </i>
+            </DeleteButton>
+          </div>
         )}
       </UserInfo>
     </CardContainer>

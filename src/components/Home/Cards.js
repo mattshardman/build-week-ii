@@ -10,11 +10,16 @@ const CardsContainer = styled.section`
   margin: 0 15px;
 `;
 
-function Cards({ photos, db, canDelete }) {
+function Cards({ photos, db, canDelete, deleteImage }) {
   return (
     <CardsContainer>
       {photos.map(photo => (
-        <Card {...photo} db={db} canDelete={canDelete} />
+        <Card
+          {...photo}
+          db={db}
+          deleteImage={deleteImage}
+          canDelete={canDelete}
+        />
       ))}
     </CardsContainer>
   );

@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import styled from "styled-components";
+import uuid from 'uuid';
 import { Redirect } from 'react-router-dom';
 
 import Button from "../Button";
@@ -37,9 +38,12 @@ function AddContent({ db, storage, user }) {
   const [url, setUrl] = useState("");
 
   const send = () => {
+    const imageId = `${title}-${uuid()}`
     db.collection("photos")
-      .doc(title)
+      .doc(imageId)
       .set({
+        id: user.uid,
+        imageId,
         user: user.displayName,
         email: user.email,
         name: title,
