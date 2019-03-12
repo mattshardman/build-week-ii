@@ -38,11 +38,12 @@ function AddContent({ db, storage, user }) {
   const [url, setUrl] = useState("");
 
   const send = () => {
-    
+    const imageId = `${title}-${uuid()}`
     db.collection("photos")
-      .doc(`${title}-${uuid()}`)
+      .doc(imageId)
       .set({
-        id: user.m,
+        id: user.uid,
+        imageId,
         user: user.displayName,
         email: user.email,
         name: title,

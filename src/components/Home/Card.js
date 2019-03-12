@@ -1,9 +1,10 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 import Button from "../Button";
 
 const CardContainer = styled.div`
+  position: relative;
   height: 350px;
   width: 400px;
   margin: 10px;
@@ -42,20 +43,22 @@ const DeleteButton = styled.button`
   background: none;
   border: none;
   cursor: pointer;
+  outline: none;
+  text-decoration: none;
 `;
 
-function Card({ id, user, name, photo, db, canDelete }) {
-  const deleteItem = () => {
-    db.collection("photos")
-      .doc(name)
-      .delete()
-      .then(function() {
-        console.log("Document successfully deleted!");
-      })
-      .catch(function(error) {
-        console.error("Error removing document: ", error);
-      });
-  };
+const DeleteModal = styled.div`
+  box-sizing: border-box;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+
+function Card({ id, imageId, user, name, photo, db, deleteImage, canDelete }) {
+  const [deleteItem, setDeleteItem] = useState(false);
 
   return (
     <CardContainer>
@@ -76,7 +79,7 @@ function Card({ id, user, name, photo, db, canDelete }) {
         {canDelete && (
           <DeleteButton>
             <i
-              onClick={deleteItem}
+              onClick={() => setDeleteItem(true)}
               style={{ fontSize: 18 }}
               className="material-icons"
             >
@@ -85,6 +88,12 @@ function Card({ id, user, name, photo, db, canDelete }) {
           </DeleteButton>
         )}
       </UserInfo>
+      {deleteItem && (
+        <DeleteModal>
+          Delete item?
+          <Button clickFunction={() => deleteImage(imageId)} label="delete" />
+        </DeleteModal>
+      )}
     </CardContainer>
   );
 }

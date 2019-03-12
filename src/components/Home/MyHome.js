@@ -1,11 +1,11 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import { connect } from "react-redux";
 import styled from "styled-components";
 import LoadingSpinner from "../LoadingSpinner";
 import Cards from "./Cards";
 import UserInfo from "./UserInfo";
 
-import { fetchUserImages } from "../../actions";
+import { fetchUserImages, deleteImage } from "../../actions";
 
 const Container = styled.div`
   box-sizing: border-box;
@@ -30,11 +30,9 @@ const LoadingContainer = styled.div`
   width: 100%;
 `;
 
-function MyHome({ db, user, fetchUserImages, userPhotos }) {
+function MyHome({ db, user, fetchUserImages, userPhotos, deleteImage }) {
   useEffect(() => {
-    if (!userPhotos.length) {
-      fetchUserImages(user.m);
-    }
+    fetchUserImages(user.uid);
   }, []);
 
   if (!userPhotos) {
@@ -49,7 +47,12 @@ function MyHome({ db, user, fetchUserImages, userPhotos }) {
     <Container>
       <UserInfo user={user} />
       <MainContent>
-        <Cards photos={userPhotos} db={db} canDelete />
+        <Cards
+          photos={userPhotos}
+          db={db}
+          deleteImage={deleteImage}
+          canDelete
+        />
       </MainContent>
     </Container>
   );
@@ -57,5 +60,5 @@ function MyHome({ db, user, fetchUserImages, userPhotos }) {
 
 export default connect(
   st => st,
-  { fetchUserImages }
+  { fetchUserImages, deleteImage }
 )(MyHome);

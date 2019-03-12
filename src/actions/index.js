@@ -18,7 +18,6 @@ export const fetchImages = () => dispatch => {
 };
 
 export const fetchSpecificImages = user => dispatch => {
-  console.log(user)
   firebase.database
     .collection("photos")
     .where("id", "==", user)
@@ -35,11 +34,10 @@ export const fetchSpecificImages = user => dispatch => {
     });
 };
 
-export const fetchUserImages = user => dispatch => {
-  console.log(user)
+export const fetchUserImages = id => dispatch => {
   firebase.database
     .collection("photos")
-    .where("id", "==", user)
+    .where("id", "==", id)
     .get()
     .then(querySnapshot => {
       const photos = [];
@@ -51,4 +49,16 @@ export const fetchUserImages = user => dispatch => {
     .catch(error => {
       console.log("Error getting documents: ", error);
     });
+};
+
+export const deleteImage = id => dispatch => {
+  firebase.database.collection("photos")
+      .doc(id)
+      .delete()
+      .then(() => {
+        dispatch({ type: types.DELETE_IMAGE, payload: { id } });
+      })
+      .catch((error) => {
+        console.error("Error removing document: ", error);
+      });
 };
