@@ -1,28 +1,20 @@
 import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
 import styled from "styled-components";
 import Cards from "./Cards";
-import Button from "../Button";
 import UserInfo from "./UserInfo";
 
 const Container = styled.div`
   box-sizing: border-box;
   min-height: 100vh;
+  display: flex;
   padding: 0 5%;
   padding-top: 100px;
-`;
-
-const AddBar = styled.div`
-  height: 40px;
   width: 100%;
-  display: flex;
-  justify-content: flex-start;
-  padding: 0 15px;
-  align-items: center;
 `;
 
 const MainContent = styled.div`
   display: flex;
+  width: 900px;
   margin: 0px 15px;
 `;
 
@@ -50,9 +42,9 @@ function MyHome({ db, user }) {
   }
   return (
     <Container>
-    <MainContent>
       <UserInfo user={user} />
-      <Cards photos={photos} />
+      <MainContent>
+        <Cards photos={photos} canDelete />
       </MainContent>
     </Container>
   );

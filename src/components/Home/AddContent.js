@@ -23,6 +23,12 @@ const Input = styled.input`
   border-radius: 5px;
   padding: 0 15px;
   margin: 10px 0;
+  transition: border 400ms;
+
+  :hover, :focus, :active {
+    outline: none;
+    border: 1px #ff0080 solid;
+  }
 `;
 
 function AddContent({ db, storage, user }) {
@@ -53,6 +59,7 @@ function AddContent({ db, storage, user }) {
 
   return (
     <AddContainer>
+      <h2>Upload a photo</h2>
       <Input
         type="text"
         placeholder="Photo Title"

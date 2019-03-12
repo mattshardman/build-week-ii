@@ -16,6 +16,12 @@ const DropArea = styled.div`
   border-radius: 5px;
   text-align: center;
   cursor: pointer;
+  transition: border 400ms;
+
+  :hover {
+    outline: none;
+    border: 1px #ff0080 solid;
+  }
 `;
 
 const UploadedImage = styled.div`
