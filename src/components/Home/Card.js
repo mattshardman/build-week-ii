@@ -44,7 +44,7 @@ const DeleteButton = styled.button`
   cursor: pointer;
 `;
 
-function Card({ user, name, photo, db, canDelete }) {
+function Card({ id, user, name, photo, db, canDelete }) {
   const deleteItem = () => {
     db.collection("photos")
       .doc(name)
@@ -67,7 +67,7 @@ function Card({ user, name, photo, db, canDelete }) {
           {name[0].toUpperCase()}
           {name.slice(1)} by&nbsp;
           <Link
-            to={`/user/${user}`}
+            to={`/user/${id}`}
             style={{ textDecoration: "none", color: "#ff0080" }}
           >
             {user}

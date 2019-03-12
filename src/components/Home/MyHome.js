@@ -1,7 +1,11 @@
 import React, { useState, useEffect } from "react";
+import { connect } from "react-redux";
 import styled from "styled-components";
+import LoadingSpinner from "../LoadingSpinner";
 import Cards from "./Cards";
 import UserInfo from "./UserInfo";
+
+import { fetchUserImages } from "../../actions";
 
 const Container = styled.div`
   box-sizing: border-box;
@@ -18,37 +22,40 @@ const MainContent = styled.div`
   margin: 0px 15px;
 `;
 
-function MyHome({ db, user }) {
+const LoadingContainer = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  width: 100%;
+`;
 
-  const [photos, setPhotos] = useState();
-
+function MyHome({ db, user, fetchUserImages, userPhotos }) {
   useEffect(() => {
-    db.collection("photos")
-      .where("email", "==", user.email)
-      .get()
-      .then(querySnapshot => {
-        const pts = [];
-        querySnapshot.forEach(doc => {
-          pts.push(doc.data());
-        });
-        setPhotos(pts);
-      })
-      .catch(error => {
-        console.log("Error getting documents: ", error);
-      });
+    if (!userPhotos.length) {
+      fetchUserImages(user.m);
+    }
   }, []);
 
-  if (!photos) {
-    return <div>Loading...</div>;
+  if (!userPhotos) {
+    return (
+      <LoadingContainer>
+        <LoadingSpinner />
+      </LoadingContainer>
+    );
   }
+
   return (
     <Container>
       <UserInfo user={user} />
       <MainContent>
-        <Cards photos={photos} db={db} canDelete />
+        <Cards photos={userPhotos} db={db} canDelete />
       </MainContent>
     </Container>
   );
 }
 
-export default MyHome;
+export default connect(
+  st => st,
+  { fetchUserImages }
+)(MyHome);
