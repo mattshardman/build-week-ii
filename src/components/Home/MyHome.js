@@ -50,13 +50,8 @@ function MyHome({ db, user }) {
   }
   return (
     <Container>
-      <AddBar>
-        <Link to="/add">
-          <Button label="Add photo" />
-        </Link>
-      </AddBar>
     <MainContent>
-      <UserInfo />
+      <UserInfo user={user} />
       <Cards photos={photos} />
       </MainContent>
     </Container>

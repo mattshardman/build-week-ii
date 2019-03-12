@@ -10,11 +10,11 @@ const CardsContainer = styled.section`
   margin: 0 15px;
 `;
 
-function Cards({ photos }) {
+function Cards({ photos, db }) {
   return (
     <CardsContainer>
       {photos.map(photo => (
-        <Card {...photo} />
+        <Card {...photo} db={db} />
       ))}
     </CardsContainer>
   );
