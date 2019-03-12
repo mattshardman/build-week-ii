@@ -45,7 +45,7 @@ function Home({ db, user }) {
   }
   return (
     <Container>
-      <Cards photos={photos} />
+      <Cards photos={photos} db={db} />
     </Container>
   );
 }

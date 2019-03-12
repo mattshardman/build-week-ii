@@ -36,14 +36,13 @@ const DragContent = ({ loading, uploadedImage, isDragActive }) => {
     if (isDragActive) {
       return <p>Drop files here</p>;
     } else {
-      return <p>Drag 'n' drop some files here, or click to select files</p>;
+      return <p style={{ padding: '0 50px' }}>Drag 'n' drop some files here, or click to select files</p>;
     }
   }
 };
 
-function MyDropzone({ storage }) {
+function MyDropzone({ storage, url, setUrl }) {
   const [loading, setLoading] = useState(false);
-  const [uploadedImage, setUploadedImage] = useState(null);
   const storageRef = storage.ref();
 
   const onDrop = useCallback(acceptedFiles => {
@@ -54,7 +53,7 @@ function MyDropzone({ storage }) {
       .then(snapshot => snapshot.ref.getDownloadURL())
       .then(url => {
         setLoading(false);
-        setUploadedImage(url);
+        setUrl(url);
       });
   });
 
@@ -65,7 +64,7 @@ function MyDropzone({ storage }) {
       <input {...getInputProps()} />
       <DragContent
         loading={loading}
-        uploadedImage={uploadedImage}
+        uploadedImage={url}
         isDragActive={isDragActive}
       />
     </DropArea>

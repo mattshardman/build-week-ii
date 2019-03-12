@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import styled from "styled-components";
+import { Redirect } from 'react-router-dom';
+
 import Button from "../Button";
 import MyDropzone from "./Drop";
 
@@ -24,6 +26,7 @@ const Input = styled.input`
 `;
 
 function AddContent({ db, storage, user }) {
+  const [sent, setSent] = useState(false);
   const [title, setTitle] = useState("");
   const [url, setUrl] = useState("");
 
@@ -37,12 +40,16 @@ function AddContent({ db, storage, user }) {
         photo: url
       })
       .then(() => {
-        console.log("Document successfully written!");
+        setSent(true);
       })
       .catch(error => {
         console.error("Error writing document: ", error);
       });
   };
+
+  if(sent) {
+    return <Redirect to="/my-home" />
+  }
 
   return (
     <AddContainer>
@@ -52,14 +59,8 @@ function AddContent({ db, storage, user }) {
         value={title}
         onChange={e => setTitle(e.target.value)}
       />
-      <Input
-        type="text"
-        placeholder="Photo Url"
-        value={url}
-        onChange={e => setUrl(e.target.value)}
-      />
       <form action="/file-upload" class="dropzone" id="my-awesome-dropzone" />
-      <MyDropzone storage={storage} />
+      <MyDropzone storage={storage} url={url} setUrl={setUrl} />
       <Button clickFunction={send} label="add" />
     </AddContainer>
   );
