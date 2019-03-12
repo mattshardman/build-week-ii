@@ -1,14 +1,10 @@
 import React, { useState, useEffect } from "react";
-import { auth, initializeApp, firestore, storage, database } from "firebase";
+import { auth } from "firebase";
 
-import { config } from "../config/config";
+import firebase from '../config/initFirebase';
 import Login from "./Login/Login";
 
-initializeApp(config);
-const db = firestore();
-const store = storage();
-const googleProvider = new auth.GoogleAuthProvider();
-const fbProvider = new auth.FacebookAuthProvider();
+const { googleProvider, fbProvider } = firebase;
 
 const withLogin = Component => {
   const WithLogin = props => {
@@ -44,8 +40,8 @@ const withLogin = Component => {
           user={user}
           logOut={logOut}
           {...props}
-          db={db}
-          storage={store}
+          db={firebase.database}
+          storage={firebase.store}
         />
       );
     }

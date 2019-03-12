@@ -19,6 +19,7 @@ const MainContent = styled.div`
 `;
 
 function MyHome({ db, user }) {
+
   const [photos, setPhotos] = useState();
 
   useEffect(() => {
@@ -44,7 +45,7 @@ function MyHome({ db, user }) {
     <Container>
       <UserInfo user={user} />
       <MainContent>
-        <Cards photos={photos} canDelete />
+        <Cards photos={photos} db={db} canDelete />
       </MainContent>
     </Container>
   );

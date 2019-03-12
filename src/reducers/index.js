@@ -1,6 +1,10 @@
 import { combineReducers } from 'redux';
-import login from './login';
+import photos from './photos';
+import specificPhotos from './specificPhotos';
+import displayPhotos from './displayPhotos';
 
 export default combineReducers({
-    login
+    displayPhotos,
+    photos,
+    specificPhotos,
 });
