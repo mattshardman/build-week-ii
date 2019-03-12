@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
+import Button from "../Button";
 
 const CardContainer = styled.div`
   height: 350px;
@@ -34,24 +35,55 @@ const UserInfo = styled.div`
   font-size: 14px;
   display: flex;
   align-items: center;
-  justify-content: flex-start;
+  justify-content: space-between;
 `;
 
-function Card({ user, name, photo }) {
+const DeleteButton = styled.button`
+  background: none;
+  border: none;
+  cursor: pointer;
+`;
+
+function Card({ user, name, photo, db, canDelete }) {
+  const deleteItem = () => {
+    db.collection("photos")
+      .doc(name)
+      .delete()
+      .then(function() {
+        console.log("Document successfully deleted!");
+      })
+      .catch(function(error) {
+        console.error("Error removing document: ", error);
+      });
+  };
+
   return (
     <CardContainer>
       <MainCard>
         <CardImg backgroundImg={photo} />
       </MainCard>
       <UserInfo>
-        {name[0].toUpperCase()}
-        {name.slice(1)} by&nbsp;
-        <Link
-          to={`/user/${user}`}
-          style={{ textDecoration: "none", color: "#ff0080" }}
-        >
-          {user}
-        </Link>
+        <div>
+          {name[0].toUpperCase()}
+          {name.slice(1)} by&nbsp;
+          <Link
+            to={`/user/${user}`}
+            style={{ textDecoration: "none", color: "#ff0080" }}
+          >
+            {user}
+          </Link>
+        </div>
+        {canDelete && (
+          <DeleteButton>
+            <i
+              onClick={deleteItem}
+              style={{ fontSize: 18 }}
+              className="material-icons"
+            >
+              delete
+            </i>
+          </DeleteButton>
+        )}
       </UserInfo>
     </CardContainer>
   );
