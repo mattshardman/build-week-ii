@@ -47,16 +47,6 @@ const DeleteButton = styled.button`
   text-decoration: none;
 `;
 
-const DeleteModal = styled.div`
-  box-sizing: border-box;
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-`;
-
 function Card({ id, imageId, user, name, photo, db, deleteImage, canDelete }) {
   const [deleteItem, setDeleteItem] = useState(false);
 
@@ -77,23 +67,36 @@ function Card({ id, imageId, user, name, photo, db, deleteImage, canDelete }) {
           </Link>
         </div>
         {canDelete && (
-          <DeleteButton>
-            <i
-              onClick={() => setDeleteItem(true)}
-              style={{ fontSize: 18 }}
-              className="material-icons"
-            >
-              delete
-            </i>
-          </DeleteButton>
+          <div>
+            <DeleteButton>
+              <i
+                onClick={
+                  deleteItem
+                    ? () => deleteImage(imageId)
+                    : () => setDeleteItem(true)
+                }
+                style={{ fontSize: 18, color: deleteItem ? "red" : "#000" }}
+                className="material-icons"
+              >
+              edit
+              </i>
+            </DeleteButton>
+            <DeleteButton>
+              <i
+                onClick={
+                  deleteItem
+                    ? () => deleteImage(imageId)
+                    : () => setDeleteItem(true)
+                }
+                style={{ fontSize: 18, color: deleteItem ? "red" : "#000" }}
+                className="material-icons"
+              >
+                delete
+              </i>
+            </DeleteButton>
+          </div>
         )}
       </UserInfo>
-      {deleteItem && (
-        <DeleteModal>
-          Delete item?
-          <Button clickFunction={() => deleteImage(imageId)} label="delete" />
-        </DeleteModal>
-      )}
     </CardContainer>
   );
 }
