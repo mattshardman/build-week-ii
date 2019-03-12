@@ -5,7 +5,7 @@ import Button from "../Button";
 
 const UserInfoContainer = styled.div`
   height: 600px;
-  width: 300px;
+  width: 320px;
   background: #fff;
   margin-top: 10px;
   box-shadow: 0 3px 25px rgba(0, 0, 0, 0.19);

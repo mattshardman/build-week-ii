@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { auth, initializeApp, firestore, storage } from "firebase";
+import { auth, initializeApp, firestore, storage, database } from "firebase";
 
 import { config } from "../config/config";
 import Login from "./Login/Login";
