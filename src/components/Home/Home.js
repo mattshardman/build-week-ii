@@ -3,7 +3,6 @@ import styled from "styled-components";
 import Cards from "./Cards";
 import LoadingSpinner from "../LoadingSpinner";
 import withData from "../withData";
-import Modal from "./Modal";
 
 const Container = styled.div`
   box-sizing: border-box;
@@ -31,7 +30,6 @@ function Home({ db, user, displayPhotos, setModal, modalPhoto }) {
   return (
     <Container>
       <Cards photos={displayPhotos} db={db} setModal={setModal} />
-      <Modal />
     </Container>
   );
 }

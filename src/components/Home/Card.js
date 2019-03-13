@@ -111,6 +111,7 @@ function Card({
             </Link>
           </div>
         )}
+        
         {canDelete && !editItem && !deleteItem && (
           <div>
             <DeleteButton>

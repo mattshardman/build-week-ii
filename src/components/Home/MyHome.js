@@ -5,7 +5,7 @@ import LoadingSpinner from "../LoadingSpinner";
 import Cards from "./Cards";
 import UserInfo from "./UserInfo";
 
-import { fetchUserImages, deleteImage, updateImage } from "../../actions";
+import { fetchUserImages, deleteImage, updateImage, setModal } from "../../actions";
 
 const Container = styled.div`
   box-sizing: border-box;
@@ -30,7 +30,7 @@ const LoadingContainer = styled.div`
   width: 100%;
 `;
 
-function MyHome({ db, user, fetchUserImages, userPhotos, updateImage, deleteImage }) {
+function MyHome({ db, user, setModal, modalPhoto, fetchUserImages, userPhotos, updateImage, deleteImage }) {
   useEffect(() => {
     fetchUserImages(user.uid);
   }, []);
@@ -50,6 +50,8 @@ function MyHome({ db, user, fetchUserImages, userPhotos, updateImage, deleteImag
         <Cards
           photos={userPhotos}
           db={db}
+          modalPhoto={modalPhoto}
+          setModal={setModal}
           updateImage={updateImage}
           deleteImage={deleteImage}
           canDelete
@@ -61,5 +63,5 @@ function MyHome({ db, user, fetchUserImages, userPhotos, updateImage, deleteImag
 
 export default connect(
   st => st,
-  { fetchUserImages, deleteImage, updateImage }
+  { fetchUserImages, deleteImage, updateImage, setModal }
 )(MyHome);

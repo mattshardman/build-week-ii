@@ -7,6 +7,7 @@ import AddContent from "./components/Home/AddContent";
 import withLogin from "./components/withLogin";
 import Header from "./components/Home/Header";
 import MyHome from "./components/Home/MyHome";
+import Modal from './components/Home/Modal';
 
 const AppContainer = styled.div`
   width: 100%;
@@ -39,6 +40,7 @@ class App extends Component {
             path="/add"
             render={props => <AddContent {...props} {...this.props} />}
           />
+          <Modal />
         </AppContainer>
       </Router>
     );
