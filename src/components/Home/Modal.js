@@ -1,5 +1,7 @@
 import React from "react";
+import { connect } from "react-redux";
 import styled from "styled-components";
+import { setModal } from "../../actions";
 
 const ModalContainer = styled.div`
   z-index: 1000;
@@ -21,7 +23,7 @@ const ModalBox = styled.div`
   background: #fff;
   display: flex;
   flex-direction: column;
-  box-shadow: 0 3px 35px rgba(0,0,0,0.3);
+  box-shadow: 0 3px 35px rgba(0, 0, 0, 0.3);
 `;
 
 const ModalImage = styled.div`
@@ -33,32 +35,70 @@ const ModalImage = styled.div`
 `;
 
 const CloseButton = styled.button`
-    position: absolute;
-    top: 20px;
-    right: 20px;
-    background: none;
-    border: none;
-    cursor: pointer;
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  outline: none;
 `;
 
-function Modal({ modalPhoto, setModal }) {
-  console.log(modalPhoto);
+const ArrowButtonLeft = styled.button`
+  position: absolute;
+  left: 5%;
+  background: none;
+  border: none;
+  cursor: pointer;
+  outline: none;
+`;
 
+const ArrowButtonRight = styled.button`
+  position: absolute;
+  right: 5%;
+  background: none;
+  border: none;
+  cursor: pointer;
+  outline: none;
+`;
+
+function Modal({ modalPhoto, setModal, displayPhotos }) {
   if (!modalPhoto) {
     return null;
   }
 
+  const currentPhoto = displayPhotos.find(e => e.imageId === modalPhoto.imageId);
+  const currentIndex = displayPhotos.indexOf(currentPhoto);
+  const nextPhoto = displayPhotos[currentIndex + 1] || displayPhotos[0];
+  const prevPhoto = displayPhotos[currentIndex + 1] || displayPhotos[displayPhotos.length - 1];
+
   return (
     <ModalContainer>
       <CloseButton onClick={() => setModal(false)}>
-        <i className="material-icons" style={{ color: '#fff' }}>close</i>
+        <i className="material-icons" style={{ color: "#fff" }}>
+          close
+        </i>
       </CloseButton>
+      <ArrowButtonLeft onClick={() => setModal(prevPhoto)}>
+        <i className="material-icons" style={{ color: "#fff" }}>
+          arrow_back
+        </i>
+      </ArrowButtonLeft>
       <ModalBox>
         <h2 style={{ marginLeft: 20 }}>{modalPhoto.name}</h2>
         <ModalImage background={modalPhoto.photo} />
+        <p style={{ marginLeft: 20 }}>{modalPhoto.user}</p>
       </ModalBox>
+      <ArrowButtonRight onClick={() => setModal(nextPhoto)}>
+        <i className="material-icons" style={{ color: "#fff" }}>
+          arrow_forward
+        </i>
+      </ArrowButtonRight>
     </ModalContainer>
   );
 }
 
-export default Modal;
+export default connect(
+  st => st,
+  { setModal }
+)(Modal);

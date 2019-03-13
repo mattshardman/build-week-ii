@@ -31,7 +31,7 @@ function Home({ db, user, displayPhotos, setModal, modalPhoto }) {
   return (
     <Container>
       <Cards photos={displayPhotos} db={db} setModal={setModal} />
-      <Modal modalPhoto={modalPhoto} setModal={setModal}  />
+      <Modal />
     </Container>
   );
 }

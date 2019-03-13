@@ -64,6 +64,5 @@ export const deleteImage = id => dispatch => {
 };
 
 export const setModal = image => dispatch => {
-  console.log('open', image)
   dispatch({ type: types.SET_MODAL_IMAGE, payload: { image } });
 };
