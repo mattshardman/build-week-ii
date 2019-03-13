@@ -125,15 +125,12 @@ function Card({
         onMouseEnter={() => setLikeSection(true)}
         onMouseLeave={() => setLikeSection(false)}
       >
-        <CardImg backgroundImg={photo} onClick={() => setModal({ imageId, name, photo, user })} />
+        <CardImg backgroundImg={photo} onClick={() => setModal({ imageId, name, photo, likes, likeImage, user, id })} />
         <LikeSection open={likeSection}>
           <small>{likes.length}</small>
           <CloseButton>
             <i
-              onClick={() => 
-                  likeImage(id, imageId, likes)
-
-              }
+              onClick={() => likeImage(id, imageId, likes)}
               style={{ fontSize: 18, color: userHasLiked ? '#ff0080' : '#000' }}
               className="material-icons"
             >

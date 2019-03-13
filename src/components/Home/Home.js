@@ -3,6 +3,7 @@ import styled from "styled-components";
 import Cards from "./Cards";
 import LoadingSpinner from "../LoadingSpinner";
 import withData from "../withData";
+import DemoCard from "./DemoCard";
 
 const Container = styled.div`
   box-sizing: border-box;
@@ -12,24 +13,41 @@ const Container = styled.div`
 `;
 
 const LoadingContainer = styled.div`
+  padding-top: 100px;
   display: flex;
   align-items: center;
   justify-content: center;
+  flex-wrap: wrap;
   height: 100vh;
   width: 100%;
 `;
 
-function Home({ db, user, displayPhotos, setModal, modalPhoto, likeImage }) {
-  if (!displayPhotos) {
+function Home({
+  loading,
+  db,
+  user,
+  displayPhotos,
+  setModal,
+  modalPhoto,
+  likeImage
+}) {
+  if (loading) {
     return (
       <LoadingContainer>
-       <LoadingSpinner />
+        {[...Array.from("123456")].map(each => (
+          <DemoCard />
+        ))}
       </LoadingContainer>
     );
   }
   return (
     <Container>
-      <Cards photos={displayPhotos} db={db} setModal={setModal} likeImage={likeImage} />
+      <Cards
+        photos={displayPhotos}
+        db={db}
+        setModal={setModal}
+        likeImage={likeImage}
+      />
     </Container>
   );
 }

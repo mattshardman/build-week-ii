@@ -10,7 +10,6 @@ import {
 
 function withData(Component) {
   const WithData = props => {
-    console.log(props);
     useEffect(() => {
       if (props.match.params.id) {
         return props.fetchSpecificImages(props.match.params.id);

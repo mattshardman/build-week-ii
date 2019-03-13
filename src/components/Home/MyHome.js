@@ -5,7 +5,14 @@ import LoadingSpinner from "../LoadingSpinner";
 import Cards from "./Cards";
 import UserInfo from "./UserInfo";
 
-import { fetchUserImages, deleteImage, updateImage, setModal, likeImage } from "../../actions";
+import {
+  fetchSpecificImages,
+  deleteImage,
+  updateImage,
+  setModal,
+  likeImage
+} from "../../actions";
+import DemoCard from "./DemoCard";
 
 const Container = styled.div`
   box-sizing: border-box;
@@ -23,32 +30,53 @@ const MainContent = styled.div`
 `;
 
 const LoadingContainer = styled.div`
+ box-sizing: border-box;
   display: flex;
-  align-items: center;
-  justify-content: center;
-  height: 100vh;
-  width: 100%;
+  flex-wrap: wrap;
+  background: #fcfdff;
+  margin: 0 15px;
 `;
 
-function MyHome({ db, user, setModal, modalPhoto, fetchUserImages, userPhotos, likeImage, updateImage, deleteImage }) {
+
+function MyHome({
+  db,
+  loading,
+  user,
+  setModal,
+  modalPhoto,
+  fetchSpecificImages,
+  userPhotos,
+  displayPhotos,
+  likeImage,
+  updateImage,
+  deleteImage
+}) {
   useEffect(() => {
-    fetchUserImages(user.uid);
+    fetchSpecificImages(user.uid);
   }, []);
 
-  if (!userPhotos) {
+  console.log(displayPhotos)
+  if (loading) {
     return (
-      <LoadingContainer>
-        <LoadingSpinner />
-      </LoadingContainer>
+      <Container>
+        <UserInfo user={user} numberOfPhotos={0} />
+        <MainContent>
+        <LoadingContainer>
+          {[...Array.from("1234")].map(each => (
+            <DemoCard />
+          ))}
+        </LoadingContainer>
+        </MainContent>
+      </Container>
     );
   }
 
   return (
     <Container>
-      <UserInfo user={user} />
+      <UserInfo user={user} numberOfPhotos={displayPhotos.length} />
       <MainContent>
         <Cards
-          photos={userPhotos}
+          photos={displayPhotos}
           db={db}
           modalPhoto={modalPhoto}
           setModal={setModal}
@@ -64,5 +92,5 @@ function MyHome({ db, user, setModal, modalPhoto, fetchUserImages, userPhotos, l
 
 export default connect(
   st => st,
-  { fetchUserImages, deleteImage, updateImage, setModal, likeImage }
+  { fetchSpecificImages, deleteImage, updateImage, setModal, likeImage }
 )(MyHome);

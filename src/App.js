@@ -40,7 +40,7 @@ class App extends Component {
             path="/add"
             render={props => <AddContent {...props} {...this.props} />}
           />
-          <Modal />
+          <Modal {...this.props} />
         </AppContainer>
       </Router>
     );

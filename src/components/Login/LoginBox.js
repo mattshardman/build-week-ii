@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import styled from "styled-components";
 
 const LoginBoxContainer = styled.section`
+position: relative;
   height: 400px;
   width: 400px;
   border-radius: 5px;
@@ -15,6 +16,7 @@ const LoginBoxContainer = styled.section`
 `;
 
 const LoginButton = styled.button`
+
   height: 40px;
   width: 200px;
   border-radius: 3px;
@@ -29,7 +31,7 @@ function LoginBox({ logIn, loading }) {
   return (
     <LoginBoxContainer>
       {loading && (
-        <div style={{ width: "100%", height: 70, background: "red" }}>hi</div>
+        <div style={{ width: "100%", height: 70, position: 'absolute', top: 0, left: 0 }}>hi</div>
       )}
       <LoginButton background="#3b5998" onClick={() => logIn("fb")}>
         Login With Facebook
