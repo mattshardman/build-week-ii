@@ -13,6 +13,7 @@ const CardContainer = styled.div`
 `;
 
 const MainCard = styled.div`
+  position: relative;
   box-sizing: border-box;
   height: 300px;
   width: 100%;
@@ -20,6 +21,25 @@ const MainCard = styled.div`
   padding: 10px;
   background: #fff;
   cursor: pointer;
+  overflow: hidden;
+`;
+
+const LikeSection = styled.div`
+  z-index: 50;
+  box-sizing: border-box;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 40px;
+  background: #fff;
+  transform: ${({ open }) => (open ? "translateY(0)" : "translateY(100%)")};
+  opacity: ${({ open }) => (open ? 1 : 0)};
+  transition: transform 400ms, opacity 400ms;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding: 0 20px;
 `;
 
 const CardImg = styled.div`
@@ -55,7 +75,7 @@ const EditItemBox = styled.div`
   width: 100%;
   display: flex;
   align-items: center;
-justify-content: ${({justify}) => justify};
+  justify-content: ${({ justify }) => justify};
 `;
 
 const EditItemField = styled.input`
@@ -76,6 +96,7 @@ const CloseButton = styled.button`
   background: none;
   border: none;
   outline: none;
+  cursor: pointer;
 `;
 
 function Card({
@@ -92,11 +113,26 @@ function Card({
   const [deleteItem, setDeleteItem] = useState(false);
   const [editItem, setEditItem] = useState(false);
   const [field, setField] = useState("");
+  const [likeSection, setLikeSection] = useState(false);
 
   return (
     <CardContainer>
-      <MainCard onClick={() => setModal({ imageId, name, photo, user })}>
-        <CardImg backgroundImg={photo} />
+      <MainCard
+        onMouseEnter={() => setLikeSection(true)}
+        onMouseLeave={() => setLikeSection(false)}
+      >
+        <CardImg backgroundImg={photo} onClick={() => setModal({ imageId, name, photo, user })} />
+        <LikeSection open={likeSection}>
+          <CloseButton>
+            <i
+              onClick={() => console.log('liked')}
+              style={{ fontSize: 18, color: '#000' }}
+              className="material-icons"
+            >
+              thumb_up_alt
+            </i>
+          </CloseButton>
+        </LikeSection>
       </MainCard>
       <UserInfo>
         {!editItem && (
@@ -111,7 +147,7 @@ function Card({
             </Link>
           </div>
         )}
-        
+
         {canDelete && !editItem && !deleteItem && (
           <div>
             <DeleteButton>
@@ -126,7 +162,7 @@ function Card({
             <DeleteButton>
               <i
                 onClick={() => setDeleteItem(true)}
-                style={{ fontSize: 18, color: deleteItem ? "red" : "#000" }}
+                style={{ fontSize: 18, color: "#000" }}
                 className="material-icons"
               >
                 delete
