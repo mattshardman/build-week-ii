@@ -113,7 +113,6 @@ function Card({
   canDelete,
   setModal
 }) {
-  console.log(comments)
   const [deleteItem, setDeleteItem] = useState(false);
   const [editItem, setEditItem] = useState(false);
   const [field, setField] = useState("");

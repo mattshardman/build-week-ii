@@ -1,8 +1,11 @@
 import React, { useState, useEffect } from "react";
+import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 import Button from "../Button";
+
+import { search } from "../../actions";
 
 const HeaderContainer = styled.header`
   position: fixed;
@@ -16,14 +19,14 @@ const HeaderContainer = styled.header`
   justify-content: space-between;
   align-items: center;
   padding: 0 5%;
-  background: rgba(255,255,255,0.9);
+  background: rgba(255, 255, 255, 0.9);
   box-shadow: ${({ scrolled }) =>
     scrolled ? "0 3px 35px rgba(0, 0, 0, 0.19)" : "none"};
   transition: box-shadow 400ms;
 `;
 
-const Title = styled.h2`
-  opacity: ${({scrolled}) => scrolled ? 0 : 1};
+const Title = styled.h1`
+  opacity: ${({ scrolled }) => (scrolled ? 0 : 1)};
   transition: opacity 400ms;
 `;
 
@@ -50,7 +53,29 @@ const Avatar = styled.div`
   }
 `;
 
-function Header({ logOut, user }) {
+const Form = styled.form`
+  width: ${({focused}) => focused ? '400px' : '200px'};
+  height: 30px;
+  border: 1px #eaeaea solid;
+  transition: width 200ms;
+  border-radius: 5px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 15px;
+`;
+
+const Input = styled.input`
+  height: 100%;
+  width: 90%;
+  border: none;
+  background: transparent;
+  outline: none;
+`;
+
+function Header({ logOut, user, search }) {
+  const [field, setField] = useState("");
+  const [focused, setFocused] = useState(false);
   const [scrolled, setScrolled] = useState(false);
 
   useEffect(() => {
@@ -76,13 +101,34 @@ function Header({ logOut, user }) {
         }}
       >
         <img
-          src="https://image.flaticon.com/icons/svg/148/148813.svg"
+          src="https://image.flaticon.com/icons/svg/590/590769.svg"
           alt=""
-          height={35}
-          style={{ marginRight: 10 }}
+          height={40}
+          style={{ marginRight: 15 }}
         />
-       <Title scrolled={scrolled}>Photo Spot</Title>
+        <Title scrolled={scrolled}>Banana</Title>
       </Link>
+      <Form 
+        onSubmit={e => {
+          e.preventDefault();
+          console.log(field)
+          search(field);
+        }}
+        focused={focused}
+      >
+        <Input
+          type="text"
+          placeholder="Search here..."
+          onFocus={() => setFocused(true)}
+          onBlur={() => {
+            setFocused(false);
+            setField('');
+          }}
+          value={field}
+          onChange={e => setField(e.target.value)}
+        />
+        <i className="material-icons" style={{ fontSize: 14 }}>search</i>
+      </Form>
       <Icons>
         <Link
           to="/"
@@ -128,4 +174,7 @@ Header.propTypes = {
   user: PropTypes.shape().isRequired
 };
 
-export default Header;
+export default connect(
+  st => st,
+  { search }
+)(Header);

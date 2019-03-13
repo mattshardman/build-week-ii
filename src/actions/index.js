@@ -52,7 +52,8 @@ export const addImage = data => dispatch => {
       email: data.user.email,
       name: data.title,
       photo: data.url,
-      likes: []
+      likes: [],
+      comments: []
     })
     .then(() => {
       dispatch({ type: types.UPLOADED_IMAGE });
@@ -108,8 +109,7 @@ export const setModal = image => dispatch => {
   dispatch({ type: types.SET_MODAL_IMAGE, payload: { image } });
 };
 
-export const addComment = ({id, imageId, comment, comments}) => dispatch => {
-  console.log(comment)
+export const addComment = ({ id, imageId, comment, comments }) => dispatch => {
   dispatch({ type: types.ADD_COMMENT, payload: { id, imageId, comment } });
 
   firebase.database
@@ -122,4 +122,9 @@ export const addComment = ({id, imageId, comment, comments}) => dispatch => {
     .catch(error => {
       console.error("Error removing document: ", error);
     });
+};
+
+export const search = input => dispatch => {
+  console.log(input);
+  dispatch({ type: types.SEARCH, payload: { input } });
 };
