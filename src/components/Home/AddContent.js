@@ -47,7 +47,8 @@ function AddContent({ db, storage, user }) {
         user: user.displayName,
         email: user.email,
         name: title,
-        photo: url
+        photo: url,
+        likes: []
       })
       .then(() => {
         setSent(true);

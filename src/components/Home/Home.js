@@ -19,7 +19,7 @@ const LoadingContainer = styled.div`
   width: 100%;
 `;
 
-function Home({ db, user, displayPhotos, setModal, modalPhoto }) {
+function Home({ db, user, displayPhotos, setModal, modalPhoto, likeImage }) {
   if (!displayPhotos) {
     return (
       <LoadingContainer>
@@ -29,7 +29,7 @@ function Home({ db, user, displayPhotos, setModal, modalPhoto }) {
   }
   return (
     <Container>
-      <Cards photos={displayPhotos} db={db} setModal={setModal} />
+      <Cards photos={displayPhotos} db={db} setModal={setModal} likeImage={likeImage} />
     </Container>
   );
 }

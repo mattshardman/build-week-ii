@@ -52,28 +52,46 @@ export const fetchUserImages = id => dispatch => {
 };
 
 export const deleteImage = id => dispatch => {
-  firebase.database.collection("photos")
-      .doc(id)
-      .delete()
+  firebase.database
+    .collection("photos")
+    .doc(id)
+    .delete()
+    .then(() => {
+      dispatch({ type: types.DELETE_IMAGE, payload: { id } });
+    })
+    .catch(error => {
+      console.error("Error removing document: ", error);
+    });
+};
+
+export const likeImage = (id, imageId, likes) => dispatch => {
+  console.log("includes", likes.includes(id));
+  if (!likes.includes(id)) {
+    dispatch({ type: types.LIKE_IMAGE, payload: { id, imageId } });
+    firebase.database
+      .collection("photos")
+      .doc(imageId)
+      .update({ likes: [...likes, id] })
       .then(() => {
-        dispatch({ type: types.DELETE_IMAGE, payload: { id } });
+        console.log("image updated");
       })
-      .catch((error) => {
+      .catch(error => {
         console.error("Error removing document: ", error);
       });
+  }
 };
 
 export const updateImage = (id, name) => dispatch => {
-  firebase.database.collection("photos")
-      .doc(id)
-      .update({ name })
-      .then(() => {
-        console.log('image updated')
-        dispatch({ type: types.UPDATE_IMAGE, payload: { id, name } });
-      })
-      .catch((error) => {
-        console.error("Error removing document: ", error);
-      });
+  firebase.database
+    .collection("photos")
+    .doc(id)
+    .update({ name })
+    .then(() => {
+      dispatch({ type: types.UPDATE_IMAGE, payload: { id, name } });
+    })
+    .catch(error => {
+      console.error("Error removing document: ", error);
+    });
 };
 
 export const setModal = image => dispatch => {

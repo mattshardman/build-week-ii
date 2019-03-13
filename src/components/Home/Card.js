@@ -20,7 +20,6 @@ const MainCard = styled.div`
   box-shadow: 0 3px 25px rgba(0, 0, 0, 0.19);
   padding: 10px;
   background: #fff;
-  cursor: pointer;
   overflow: hidden;
 `;
 
@@ -39,7 +38,7 @@ const LikeSection = styled.div`
   display: flex;
   align-items: center;
   justify-content: flex-end;
-  padding: 0 20px;
+  padding: 0 10px;
 `;
 
 const CardImg = styled.div`
@@ -49,6 +48,7 @@ const CardImg = styled.div`
   background-image: ${({ backgroundImg }) => `url(${backgroundImg})`};
   background-size: cover;
   background-position: center;
+  cursor: pointer;
 `;
 
 const UserInfo = styled.div`
@@ -103,8 +103,10 @@ function Card({
   id,
   imageId,
   user,
+  likes,
   name,
   photo,
+  likeImage,
   updateImage,
   deleteImage,
   canDelete,
@@ -115,6 +117,8 @@ function Card({
   const [field, setField] = useState("");
   const [likeSection, setLikeSection] = useState(false);
 
+  const userHasLiked = likes.includes(id);
+
   return (
     <CardContainer>
       <MainCard
@@ -123,10 +127,14 @@ function Card({
       >
         <CardImg backgroundImg={photo} onClick={() => setModal({ imageId, name, photo, user })} />
         <LikeSection open={likeSection}>
+          <small>{likes.length}</small>
           <CloseButton>
             <i
-              onClick={() => console.log('liked')}
-              style={{ fontSize: 18, color: '#000' }}
+              onClick={() => 
+                  likeImage(id, imageId, likes)
+
+              }
+              style={{ fontSize: 18, color: userHasLiked ? '#ff0080' : '#000' }}
               className="material-icons"
             >
               thumb_up_alt
