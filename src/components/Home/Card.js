@@ -47,7 +47,7 @@ const DeleteButton = styled.button`
   text-decoration: none;
 `;
 
-function Card({ id, imageId, user, name, photo, db, deleteImage, canDelete, setModal }) {
+function Card({ id, imageId, user, name, photo, updateImage, deleteImage, canDelete, setModal }) {
   const [deleteItem, setDeleteItem] = useState(false);
   return (
     <CardContainer>
@@ -70,6 +70,7 @@ function Card({ id, imageId, user, name, photo, db, deleteImage, canDelete, setM
             <DeleteButton>
               <i
                 style={{ fontSize: 18, color: "#000"}}
+                onClick={() => updateImage(imageId, 'Nameemem')}
                 className="material-icons"
               >
               edit

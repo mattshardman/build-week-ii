@@ -63,6 +63,19 @@ export const deleteImage = id => dispatch => {
       });
 };
 
+export const updateImage = (id, name) => dispatch => {
+  firebase.database.collection("photos")
+      .doc(id)
+      .update({ name })
+      .then(() => {
+        console.log('image updated')
+        dispatch({ type: types.UPDATE_IMAGE, payload: { id, name } });
+      })
+      .catch((error) => {
+        console.error("Error removing document: ", error);
+      });
+};
+
 export const setModal = image => dispatch => {
   dispatch({ type: types.SET_MODAL_IMAGE, payload: { image } });
 };

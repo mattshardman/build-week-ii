@@ -5,7 +5,7 @@ import LoadingSpinner from "../LoadingSpinner";
 import Cards from "./Cards";
 import UserInfo from "./UserInfo";
 
-import { fetchUserImages, deleteImage } from "../../actions";
+import { fetchUserImages, deleteImage, updateImage } from "../../actions";
 
 const Container = styled.div`
   box-sizing: border-box;
@@ -30,7 +30,7 @@ const LoadingContainer = styled.div`
   width: 100%;
 `;
 
-function MyHome({ db, user, fetchUserImages, userPhotos, deleteImage }) {
+function MyHome({ db, user, fetchUserImages, userPhotos, updateImage, deleteImage }) {
   useEffect(() => {
     fetchUserImages(user.uid);
   }, []);
@@ -50,6 +50,7 @@ function MyHome({ db, user, fetchUserImages, userPhotos, deleteImage }) {
         <Cards
           photos={userPhotos}
           db={db}
+          updateImage={updateImage}
           deleteImage={deleteImage}
           canDelete
         />
@@ -60,5 +61,5 @@ function MyHome({ db, user, fetchUserImages, userPhotos, deleteImage }) {
 
 export default connect(
   st => st,
-  { fetchUserImages, deleteImage }
+  { fetchUserImages, deleteImage, updateImage }
 )(MyHome);
