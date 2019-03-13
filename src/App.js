@@ -5,7 +5,7 @@ import { BrowserRouter as Router, Route } from "react-router-dom";
 import Home from "./components/Home/Home";
 import AddContent from "./components/Home/AddContent";
 import withLogin from "./components/withLogin";
-import Header from "./components/Home/Header";
+import Header from "./components/Home/Header/Header";
 import MyHome from "./components/Home/MyHome";
 import Modal from './components/Home/Modal';
 
