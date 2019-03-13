@@ -69,12 +69,7 @@ function Card({ id, imageId, user, name, photo, db, deleteImage, canDelete }) {
           <div>
             <DeleteButton>
               <i
-                onClick={
-                  deleteItem
-                    ? () => deleteImage(imageId)
-                    : () => setDeleteItem(true)
-                }
-                style={{ fontSize: 18, color: deleteItem ? "red" : "#000" }}
+                style={{ fontSize: 18, color: "#000"}}
                 className="material-icons"
               >
               edit
