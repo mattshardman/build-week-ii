@@ -12,7 +12,11 @@ function withData(Component) {
       return props.fetchImages();
     }, []);
 
-    return <Component {...props} />;
+    const openModal = () => {
+      console.log('click')
+    }
+
+    return <Component {...props} openModal={openModal} />;
   };
   
   return connect(
