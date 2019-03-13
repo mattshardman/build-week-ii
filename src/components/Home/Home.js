@@ -20,7 +20,7 @@ const LoadingContainer = styled.div`
   width: 100%;
 `;
 
-function Home({ db, user, displayPhotos, openModal }) {
+function Home({ db, user, displayPhotos, setModal, modalPhoto }) {
   if (!displayPhotos) {
     return (
       <LoadingContainer>
@@ -30,8 +30,8 @@ function Home({ db, user, displayPhotos, openModal }) {
   }
   return (
     <Container>
-      <Cards photos={displayPhotos} db={db} openModal={openModal} />
-      <Modal />
+      <Cards photos={displayPhotos} db={db} setModal={setModal} />
+      <Modal modalPhoto={modalPhoto} setModal={setModal}  />
     </Container>
   );
 }

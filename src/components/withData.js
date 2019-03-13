@@ -1,10 +1,11 @@
 import React, { useEffect } from "react";
 import { connect } from "react-redux";
 
-import { fetchImages, fetchSpecificImages } from "../actions";
+import { fetchImages, fetchSpecificImages, setModal } from "../actions";
 
 function withData(Component) {
   const WithData = props => {
+    console.log(props)
     useEffect(() => {
       if(props.match.params.id) {
         return props.fetchSpecificImages(props.match.params.id);
@@ -12,16 +13,12 @@ function withData(Component) {
       return props.fetchImages();
     }, []);
 
-    const openModal = () => {
-      console.log('click')
-    }
-
-    return <Component {...props} openModal={openModal} />;
+    return <Component {...props} setModal={props.setModal} modalPhoto={props.modalPhoto} />;
   };
   
   return connect(
     st => st,
-    { fetchImages, fetchSpecificImages }
+    { fetchImages, fetchSpecificImages, setModal }
   )(WithData);
 }
 

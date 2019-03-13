@@ -10,7 +10,7 @@ const CardsContainer = styled.section`
   margin: 0 15px;
 `;
 
-function Cards({ photos, db, canDelete, deleteImage, openModal }) {
+function Cards({ photos, db, canDelete, deleteImage, setModal }) {
   return (
     <CardsContainer>
       {photos.map(photo => (
@@ -19,7 +19,7 @@ function Cards({ photos, db, canDelete, deleteImage, openModal }) {
           db={db}
           deleteImage={deleteImage}
           canDelete={canDelete}
-          openModal={openModal}
+          setModal={setModal}
         />
       ))}
     </CardsContainer>

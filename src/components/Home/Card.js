@@ -46,12 +46,11 @@ const DeleteButton = styled.button`
   text-decoration: none;
 `;
 
-function Card({ id, imageId, user, name, photo, db, deleteImage, canDelete, openModal }) {
+function Card({ id, imageId, user, name, photo, db, deleteImage, canDelete, setModal }) {
   const [deleteItem, setDeleteItem] = useState(false);
-console.log(openModal)
   return (
     <CardContainer>
-      <MainCard onClick={openModal}>
+      <MainCard onClick={() => setModal({ id, name, photo })}>
         <CardImg backgroundImg={photo} />
       </MainCard>
       <UserInfo>
