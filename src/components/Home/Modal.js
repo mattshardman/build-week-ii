@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
@@ -10,14 +10,16 @@ const ModalContainer = styled.div`
   top: 0;
   left: 0;
   width: 100%;
-  height: 100vh;
+  min-height: 100vh;
   background: rgba(0, 0, 0, 0.9);
   display: flex;
   justify-content: center;
   align-items: center;
+  overflow: scroll;
 `;
 
 const ModalBox = styled.div`
+  margin: 0 50px;
   height: 90%;
   width: 60%;
   border-radius: 5px;
@@ -91,8 +93,28 @@ const ArrowButtonRight = styled.button`
   outline: none;
 `;
 
+const CommentsSection = styled.div`
+  margin: 0 20px;
+`;
+
+const Comments = styled.div`
+  display: flex;
+  flex-direction: column-reverse;
+  margin-bottom: 20px;
+  height: 40%;
+  overflow: scroll;
+`;
+
+const CommentButton = styled.button`
+  background: none;
+  border: none;
+  width: 100px;
+  height: 25px;
+`;
+
 function Modal({ user, addComment, modalPhoto, setModal, displayPhotos }) {
-  console.log(modalPhoto)
+  const [field, setField] = useState("");
+
   if (!modalPhoto) {
     return null;
   }
@@ -135,21 +157,35 @@ function Modal({ user, addComment, modalPhoto, setModal, displayPhotos }) {
             {modalPhoto.user}
           </Link>
         </p>
-        <div>
-          Comments
-          <button
-            onClick={() =>
+        <CommentsSection>
+          <input
+            type="text"
+            value={field}
+            onChange={e => setField(e.target.value)}
+          />
+          <CommentButton
+            onClick={() => {
               addComment({
                 id: modalPhoto.id,
                 imageId: modalPhoto.imageId,
-                comment: "hi",
+                comment: { user: user.displayName, text: field },
                 comments: modalPhoto.comments
-              })
-            }
-          />
-          {modalPhoto.comments.map(comment => <div>{comment}</div>
-          )}
-        </div>
+              });
+              setField("");
+            }}
+          >
+            ADD COMMENT
+          </CommentButton>
+          <h3 style={{ margin: "5px 0px" }}>Comments</h3>
+
+          <Comments>
+            {modalPhoto.comments.map(comment => (
+              <p style={{ margin: "5px 0px" }}>
+                <strong>{comment.user}</strong>&nbsp;{comment.text}
+              </p>
+            ))}
+          </Comments>
+        </CommentsSection>
       </ModalBox>
       <ArrowButtonRight onClick={() => setModal(nextPhoto)}>
         <i className="material-icons" style={{ color: "#fff" }}>
