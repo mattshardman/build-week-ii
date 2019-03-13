@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
-import Button from "../Button";
 
 const CardContainer = styled.div`
   position: relative;
