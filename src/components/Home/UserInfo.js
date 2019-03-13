@@ -1,9 +1,10 @@
 import React from "react";
-import { Link } from 'react-router-dom';
+import { Link } from "react-router-dom";
 import styled from "styled-components";
 import Button from "../Button";
 
 const UserInfoContainer = styled.div`
+  box-sizing: border-box;
   height: 600px;
   width: 320px;
   background: #fff;
@@ -34,13 +35,12 @@ const Photo = styled.img`
 `;
 
 function UserInfo({ user }) {
-  console.log(user);
   return (
     <UserInfoContainer>
       <PhotoSection>
         <Photo background={user.photoURL} />
       </PhotoSection>
-      <h2 style={{  margin: 0 }}>{user.displayName}</h2>
+      <h2 style={{ margin: 0 }}>{user.displayName}</h2>
       <Link to="/add">
         <Button label="add new photo" />
       </Link>

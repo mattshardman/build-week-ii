@@ -1,61 +1,64 @@
-import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import React, { useEffect } from "react";
+import { connect } from "react-redux";
 import styled from "styled-components";
+import LoadingSpinner from "../LoadingSpinner";
 import Cards from "./Cards";
-import Button from "../Button";
 import UserInfo from "./UserInfo";
+
+import { fetchUserImages, deleteImage } from "../../actions";
 
 const Container = styled.div`
   box-sizing: border-box;
   min-height: 100vh;
+  display: flex;
   padding: 0 5%;
   padding-top: 100px;
-`;
-
-const AddBar = styled.div`
-  height: 40px;
   width: 100%;
-  display: flex;
-  justify-content: flex-start;
-  padding: 0 15px;
-  align-items: center;
 `;
 
 const MainContent = styled.div`
   display: flex;
+  width: 900px;
   margin: 0px 15px;
 `;
 
-function MyHome({ db, user }) {
-  const [photos, setPhotos] = useState();
+const LoadingContainer = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  width: 100%;
+`;
 
+function MyHome({ db, user, fetchUserImages, userPhotos, deleteImage }) {
   useEffect(() => {
-    db.collection("photos")
-      .where("email", "==", user.email)
-      .get()
-      .then(querySnapshot => {
-        const pts = [];
-        querySnapshot.forEach(doc => {
-          pts.push(doc.data());
-        });
-        setPhotos(pts);
-      })
-      .catch(error => {
-        console.log("Error getting documents: ", error);
-      });
+    fetchUserImages(user.uid);
   }, []);
 
-  if (!photos) {
-    return <div>Loading...</div>;
+  if (!userPhotos) {
+    return (
+      <LoadingContainer>
+        <LoadingSpinner />
+      </LoadingContainer>
+    );
   }
+
   return (
     <Container>
-    <MainContent>
       <UserInfo user={user} />
-      <Cards photos={photos} />
+      <MainContent>
+        <Cards
+          photos={userPhotos}
+          db={db}
+          deleteImage={deleteImage}
+          canDelete
+        />
       </MainContent>
     </Container>
   );
 }
 
-export default MyHome;
+export default connect(
+  st => st,
+  { fetchUserImages, deleteImage }
+)(MyHome);

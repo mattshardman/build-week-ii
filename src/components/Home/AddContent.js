@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import styled from "styled-components";
+import uuid from 'uuid';
 import { Redirect } from 'react-router-dom';
 
 import Button from "../Button";
@@ -23,6 +24,12 @@ const Input = styled.input`
   border-radius: 5px;
   padding: 0 15px;
   margin: 10px 0;
+  transition: border 400ms;
+
+  :hover, :focus, :active {
+    outline: none;
+    border: 1px #ff0080 solid;
+  }
 `;
 
 function AddContent({ db, storage, user }) {
@@ -31,9 +38,12 @@ function AddContent({ db, storage, user }) {
   const [url, setUrl] = useState("");
 
   const send = () => {
+    const imageId = `${title}-${uuid()}`
     db.collection("photos")
-      .doc(title)
+      .doc(imageId)
       .set({
+        id: user.uid,
+        imageId,
         user: user.displayName,
         email: user.email,
         name: title,
@@ -53,6 +63,7 @@ function AddContent({ db, storage, user }) {
 
   return (
     <AddContainer>
+      <h2>Upload a photo</h2>
       <Input
         type="text"
         placeholder="Photo Title"
