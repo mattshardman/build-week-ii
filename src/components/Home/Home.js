@@ -3,6 +3,7 @@ import styled from "styled-components";
 import Cards from "./Cards";
 import LoadingSpinner from "../LoadingSpinner";
 import withData from "../withData";
+import Modal from "./Modal";
 
 const Container = styled.div`
   box-sizing: border-box;
@@ -19,7 +20,7 @@ const LoadingContainer = styled.div`
   width: 100%;
 `;
 
-function Home({ db, user, displayPhotos }) {
+function Home({ db, user, displayPhotos, setModal, modalPhoto }) {
   if (!displayPhotos) {
     return (
       <LoadingContainer>
@@ -29,7 +30,8 @@ function Home({ db, user, displayPhotos }) {
   }
   return (
     <Container>
-      <Cards photos={displayPhotos} db={db} />
+      <Cards photos={displayPhotos} db={db} setModal={setModal} />
+      <Modal />
     </Container>
   );
 }

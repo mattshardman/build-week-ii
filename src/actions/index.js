@@ -62,3 +62,7 @@ export const deleteImage = id => dispatch => {
         console.error("Error removing document: ", error);
       });
 };
+
+export const setModal = image => dispatch => {
+  dispatch({ type: types.SET_MODAL_IMAGE, payload: { image } });
+};

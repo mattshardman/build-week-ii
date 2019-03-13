@@ -18,6 +18,7 @@ const MainCard = styled.div`
   box-shadow: 0 3px 25px rgba(0, 0, 0, 0.19);
   padding: 10px;
   background: #fff;
+  cursor: pointer;
 `;
 
 const CardImg = styled.div`
@@ -46,12 +47,11 @@ const DeleteButton = styled.button`
   text-decoration: none;
 `;
 
-function Card({ id, imageId, user, name, photo, db, deleteImage, canDelete }) {
+function Card({ id, imageId, user, name, photo, db, deleteImage, canDelete, setModal }) {
   const [deleteItem, setDeleteItem] = useState(false);
-
   return (
     <CardContainer>
-      <MainCard>
+      <MainCard onClick={() => setModal({ imageId, name, photo, user })}>
         <CardImg backgroundImg={photo} />
       </MainCard>
       <UserInfo>
