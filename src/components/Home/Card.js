@@ -105,6 +105,7 @@ function Card({
   user,
   likes,
   name,
+  comments,
   photo,
   likeImage,
   updateImage,
@@ -112,6 +113,7 @@ function Card({
   canDelete,
   setModal
 }) {
+  console.log(comments)
   const [deleteItem, setDeleteItem] = useState(false);
   const [editItem, setEditItem] = useState(false);
   const [field, setField] = useState("");
@@ -125,7 +127,7 @@ function Card({
         onMouseEnter={() => setLikeSection(true)}
         onMouseLeave={() => setLikeSection(false)}
       >
-        <CardImg backgroundImg={photo} onClick={() => setModal({ imageId, name, photo, likes, likeImage, user, id })} />
+        <CardImg backgroundImg={photo} onClick={() => setModal({ imageId, name, photo, likes, likeImage, user, id, comments })} />
         <LikeSection open={likeSection}>
           <small>{likes.length}</small>
           <CloseButton>

@@ -1,8 +1,8 @@
 import React from "react";
 import { connect } from "react-redux";
-import { Link } from 'react-router-dom';
+import { Link } from "react-router-dom";
 import styled from "styled-components";
-import { setModal } from "../../actions";
+import { setModal, addComment } from "../../actions";
 
 const ModalContainer = styled.div`
   z-index: 1000;
@@ -91,15 +91,19 @@ const ArrowButtonRight = styled.button`
   outline: none;
 `;
 
-function Modal({ user, modalPhoto, setModal, displayPhotos }) {
+function Modal({ user, addComment, modalPhoto, setModal, displayPhotos }) {
+  console.log(modalPhoto)
   if (!modalPhoto) {
     return null;
   }
 
-  const currentPhoto = displayPhotos.find(e => e.imageId === modalPhoto.imageId);
+  const currentPhoto = displayPhotos.find(
+    e => e.imageId === modalPhoto.imageId
+  );
   const currentIndex = displayPhotos.indexOf(currentPhoto);
   const nextPhoto = displayPhotos[currentIndex + 1] || displayPhotos[0];
-  const prevPhoto = displayPhotos[currentIndex + 1] || displayPhotos[displayPhotos.length - 1];
+  const prevPhoto =
+    displayPhotos[currentIndex + 1] || displayPhotos[displayPhotos.length - 1];
 
   return (
     <ModalContainer>
@@ -116,13 +120,36 @@ function Modal({ user, modalPhoto, setModal, displayPhotos }) {
       <ModalBox>
         <TitleSection>
           <AvatarSection>
-          <Avatar background={user.photoURL} />
-          <h2>{modalPhoto.name[0].toUpperCase()}{modalPhoto.name.slice(1)}</h2>
+            <Avatar background={user.photoURL} />
+            <h2>
+              {modalPhoto.name[0].toUpperCase()}
+              {modalPhoto.name.slice(1)}
+            </h2>
           </AvatarSection>
-          <div></div>
+          <div />
         </TitleSection>
         <ModalImage background={modalPhoto.photo} />
-        <p style={{ marginLeft: 20 }}>A photo by <Link to={`/user/${modalPhoto.id}`} onClick={() => setModal(false)}>{modalPhoto.user}</Link></p>
+        <p style={{ marginLeft: 20 }}>
+          A photo by{" "}
+          <Link to={`/user/${modalPhoto.id}`} onClick={() => setModal(false)}>
+            {modalPhoto.user}
+          </Link>
+        </p>
+        <div>
+          Comments
+          <button
+            onClick={() =>
+              addComment({
+                id: modalPhoto.id,
+                imageId: modalPhoto.imageId,
+                comment: "hi",
+                comments: modalPhoto.comments
+              })
+            }
+          />
+          {modalPhoto.comments.map(comment => <div>{comment}</div>
+          )}
+        </div>
       </ModalBox>
       <ArrowButtonRight onClick={() => setModal(nextPhoto)}>
         <i className="material-icons" style={{ color: "#fff" }}>
@@ -135,5 +162,5 @@ function Modal({ user, modalPhoto, setModal, displayPhotos }) {
 
 export default connect(
   st => st,
-  { setModal }
+  { setModal, addComment }
 )(Modal);

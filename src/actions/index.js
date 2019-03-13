@@ -76,7 +76,6 @@ export const deleteImage = id => dispatch => {
 };
 
 export const likeImage = (id, imageId, likes) => dispatch => {
-  console.log("includes", likes.includes(id));
   if (!likes.includes(id)) {
     dispatch({ type: types.LIKE_IMAGE, payload: { id, imageId } });
     firebase.database
@@ -107,4 +106,20 @@ export const updateImage = (id, name) => dispatch => {
 
 export const setModal = image => dispatch => {
   dispatch({ type: types.SET_MODAL_IMAGE, payload: { image } });
+};
+
+export const addComment = ({id, imageId, comment, comments}) => dispatch => {
+  console.log(comment)
+  dispatch({ type: types.ADD_COMMENT, payload: { id, imageId, comment } });
+
+  firebase.database
+    .collection("photos")
+    .doc(imageId)
+    .update({ comments: [...comments, comment] })
+    .then(() => {
+      console.log("image updated");
+    })
+    .catch(error => {
+      console.error("Error removing document: ", error);
+    });
 };

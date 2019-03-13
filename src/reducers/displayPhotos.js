@@ -2,6 +2,15 @@ import types from "../constants";
 
 export default (state = [], action) => {
   switch (action.type) {
+    case types.ADD_COMMENT:
+    console.log(action)
+      return state.map(each => {
+        if (each.imageId === action.payload.imageId) {
+          console.log('yer')
+          return { ...each, comments: [...each.comments, action.payload.comment] };
+        }
+        return { ...each };
+      });
     case types.LIKE_IMAGE:
       return state.map(each => {
         if (each.imageId === action.payload.imageId) {
