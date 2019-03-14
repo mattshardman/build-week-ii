@@ -6,7 +6,7 @@ import EditSection from "./EditSection";
 import MainCard from "./MainCard";
 
 const CardContainer = styled.div`
-box-sizing: border=box;
+  box-sizing: border=box;
   position: relative;
   height: 350px;
   width: 400px;
@@ -14,9 +14,9 @@ box-sizing: border=box;
   display: flex;
   flex-direction: column;
 
-  @media(max-width: 500px) {
+  @media (max-width: 500px) {
     width: 100%;
-    margin: 0;
+    margin: 10px 0;
   }
 `;
 

@@ -106,11 +106,13 @@ function Header({ logOut, user, search }) {
     <HeaderContainer scrolled={scrolled}>
       <MobileIcons>
         <LinkIcon icon="person" to="/my-home" />
-        <img
-          src="https://image.flaticon.com/icons/svg/590/590769.svg"
-          alt=""
-          height={35}
-        />
+        <Link to="/">
+          <img
+            src="https://image.flaticon.com/icons/svg/590/590769.svg"
+            alt=""
+            height={35}
+          />
+        </Link>
         <LinkIcon icon="cloud_upload" to="/add" />
       </MobileIcons>
       <LogoWrapper>

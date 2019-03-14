@@ -6,11 +6,11 @@ import Button from "../Button";
 const UserInfoContainer = styled.div`
   box-sizing: border-box;
   height: 300px;
-  width: 320px;
+  width: 340px;
+  max-width: 100%;
   background: #fff;
   margin-top: 10px;
-  /* box-shadow: 0 3px 25px rgba(0, 0, 0, 0.19);
-   */
+  margin-bottom: 10px;
   border-radius: 5px;
   border: 1px #eaeaea solid;
   display: flex;
