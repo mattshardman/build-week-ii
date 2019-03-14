@@ -4,7 +4,7 @@ import styled from 'styled-components';
 const Form = styled.form`
   width: ${({focused}) => focused ? '400px' : '200px'};
   border: ${({focused}) => focused ? '1px #ff0080 solid' : '1px solid #eaeaea'};
-  height: 30px;
+  height: 35px;
   transition: width 200ms, border 1s;
   border-radius: 5px;
   display: flex;

@@ -43,7 +43,7 @@ const Avatar = styled.div`
   align-items: center;
   border-radius: 50%;
   overflow: hidden;
-  margin: 0 20px;
+  margin: 0 15px;
   border: 1px solid transparent;
   transition: border 400ms;
 

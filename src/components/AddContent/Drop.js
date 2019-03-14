@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import styled from "styled-components";
 import { useDropzone } from "react-dropzone";
 import LinearProgress from "@material-ui/core/LinearProgress";
@@ -44,7 +44,7 @@ const UploadedImage = styled.div`
   overflow: hidden;
 `;
 
-const DragContent = ({ loading, uploadedImage, isDragActive }) => {
+const DragContent = ({ uploadedImage, isDragActive }) => {
   if (uploadedImage) {
     return <UploadedImage uploadedImage={uploadedImage} />;
   } else {
@@ -72,8 +72,9 @@ function MyDropzone({ storage, url, setUrl }) {
         preview: URL.createObjectURL(acceptedFiles[0])
       })
     );
+
     setLoading(true);
-    setUrl(files.preview);
+    
     const task = storageRef.child(acceptedFiles[0].name).put(acceptedFiles[0]);
     task
       .then(snapshot => {
@@ -84,6 +85,10 @@ function MyDropzone({ storage, url, setUrl }) {
         setLoading(false);
       });
   });
+
+  useEffect(() => {
+    setUrl(files.preview);
+  }, [files])
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop });
 
@@ -96,7 +101,6 @@ function MyDropzone({ storage, url, setUrl }) {
       )}
       <input {...getInputProps()} />
       <DragContent
-        loading={loading}
         uploadedImage={url}
         isDragActive={isDragActive}
       />

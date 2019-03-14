@@ -17,7 +17,7 @@ function LinkIcon({ icon, to }) {
     <Link
       to={to}
       style={{
-        margin: "0 20px",
+        margin: "0 15px",
         textDecoration: "none",
         color: "black",
         display: "flex",
