@@ -1,12 +1,13 @@
 import React, { useState } from "react";
-import { connect } from 'react-redux';
+import { connect } from "react-redux";
 import styled from "styled-components";
-import { Redirect } from 'react-router-dom';
+import { Redirect } from "react-router-dom";
 
-import { addImage } from '../../actions';
+import { addImage } from "../../actions";
 
 import Button from "../Button";
-import MyDropzone from "./Drop";
+import Dropzone from "./Drop";
+import { CircularProgress } from "@material-ui/core";
 
 const AddContainer = styled.div`
   width: 100%;
@@ -29,27 +30,35 @@ const Input = styled.input`
   margin: 10px 0;
   transition: border 400ms;
 
-  :hover, :focus, :active {
+  :hover,
+  :focus,
+  :active {
     outline: none;
     border: 1px #ff0080 solid;
   }
 `;
 
 function AddContent({ imageUploaded, db, storage, user, addImage }) {
+  const [loading, setLoading] = useState(false);
   const [title, setTitle] = useState("");
   const [url, setUrl] = useState("");
 
   const send = () => {
-    addImage({ user, title, url});
+    addImage({ user, title, url });
+    setLoading(true);
   };
 
-  if(imageUploaded) {
-    return <Redirect to="/my-home" />
+  if (imageUploaded) {
+    return <Redirect to="/my-home" />;
   }
 
   return (
     <AddContainer>
-      <img src="https://image.flaticon.com/icons/svg/138/138584.svg" alt="" width={60}/>
+      <img
+        src="https://image.flaticon.com/icons/svg/138/138584.svg"
+        alt=""
+        width={60}
+      />
       <h2>Upload a photo</h2>
       <Input
         type="text"
@@ -58,10 +67,21 @@ function AddContent({ imageUploaded, db, storage, user, addImage }) {
         onChange={e => setTitle(e.target.value)}
       />
       <form action="/file-upload" class="dropzone" />
-      <MyDropzone storage={storage} url={url} setUrl={setUrl} />
+      <Dropzone
+        storage={storage}
+        url={url}
+        setUrl={setUrl}
+        loading={loading}
+        setLoading={setLoading}
+      />
+      { loading ?  <CircularProgress /> :
       <Button clickFunction={send} label="add" />
+      }
     </AddContainer>
   );
 }
 
-export default connect(st => st, {addImage})(AddContent);
+export default connect(
+  st => st,
+  { addImage }
+)(AddContent);

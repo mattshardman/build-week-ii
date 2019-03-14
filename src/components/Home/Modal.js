@@ -32,6 +32,7 @@ const ModalBox = styled.div`
 const TitleSection = styled.div`
   width: 100%;
   height: 60px;
+  margin-left: 20px;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -73,6 +74,12 @@ const ArrowButtonRight = styled.button`
   outline: none;
 `;
 
+const CommentForm = styled.form`
+  margin: 10px 0;
+  display: flex;
+  align-items: center;
+`;
+
 const CommentsSection = styled.div`
   margin: 0 20px;
 `;
@@ -85,11 +92,19 @@ const Comments = styled.div`
   overflow: scroll;
 `;
 
+const Input = styled.input`
+  height: 30px;
+  width: 50%;
+  outline: none;
+  padding: 0 15px;
+`;
+
 const CommentButton = styled.button`
   background: none;
   border: none;
   width: 100px;
   height: 25px;
+  outline: none;
 `;
 
 function Modal({ user, addComment, modalPhoto, setModal, displayPhotos }) {
@@ -121,22 +136,27 @@ function Modal({ user, addComment, modalPhoto, setModal, displayPhotos }) {
       </ArrowButtonLeft>
       <ModalBox>
         <TitleSection>
+          <h2>
+            {modalPhoto.name[0].toUpperCase()}
+            {modalPhoto.name.slice(1)}
+          </h2>
         </TitleSection>
         <ModalImage background={modalPhoto.photo} />
         <p style={{ marginLeft: 20 }}>
           A photo by{" "}
-          <Link to={`/user/${modalPhoto.id}`} style={{ color: '#ff0080', textDecoration: 'none' }} onClick={() => setModal(false)}>
+          <Link
+            to={`/user/${modalPhoto.id}`}
+            style={{ color: "#ff0080", textDecoration: "none" }}
+            onClick={() => setModal(false)}
+          >
             {modalPhoto.user}
           </Link>
         </p>
         <CommentsSection>
-          <input
-            type="text"
-            value={field}
-            onChange={e => setField(e.target.value)}
-          />
-          <CommentButton
-            onClick={() => {
+          <h3 style={{ margin: "5px 0px" }}>Comments</h3>
+          <CommentForm
+            onSubmit={e => {
+              e.preventDefault();
               addComment({
                 id: modalPhoto.id,
                 imageId: modalPhoto.imageId,
@@ -146,10 +166,13 @@ function Modal({ user, addComment, modalPhoto, setModal, displayPhotos }) {
               setField("");
             }}
           >
-            ADD COMMENT
-          </CommentButton>
-          <h3 style={{ margin: "5px 0px" }}>Comments</h3>
-
+            <Input
+              type="text"
+              value={field}
+              onChange={e => setField(e.target.value)}
+            />
+            <CommentButton type="submit">ADD COMMENT</CommentButton>
+          </CommentForm>
           <Comments>
             {modalPhoto.comments.map(comment => (
               <p style={{ margin: "5px 0px" }}>

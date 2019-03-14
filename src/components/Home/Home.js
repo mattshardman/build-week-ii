@@ -11,19 +11,22 @@ const Container = styled.div`
   padding: 0 5%;
   padding-top: 100px;
 
-  @media(max-width: 500px) {
+  @media(max-width: 900px) {
     padding-top: 80px;
   }
 `;
 
 const LoadingContainer = styled.div`
-  padding-top: 100px;
+  box-sizing: border-box;
   display: flex;
-  align-items: center;
-  justify-content: center;
   flex-wrap: wrap;
-  height: 100vh;
-  width: 100%;
+  background: #fcfdff;
+  margin: 0 15px;
+
+  @media(max-width: 900px) {
+    width: 100%;
+    margin: 0;
+  }
 `;
 
 function Home({
@@ -37,11 +40,13 @@ function Home({
 }) {
   if (loading) {
     return (
-      <LoadingContainer>
-        {[...Array.from("123456")].map(each => (
-          <DemoCard />
-        ))}
-      </LoadingContainer>
+      <Container>
+        <LoadingContainer>
+          {[...Array.from("123456")].map(each => (
+            <DemoCard />
+          ))}
+        </LoadingContainer>
+      </Container>
     );
   }
   return (

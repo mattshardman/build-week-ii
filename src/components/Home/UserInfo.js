@@ -6,7 +6,7 @@ import Button from "../Button";
 const UserInfoContainer = styled.div`
   box-sizing: border-box;
   height: 300px;
-  width: 340px;
+  width: 400px;
   max-width: 100%;
   background: #fff;
   margin-top: 10px;
@@ -14,6 +14,7 @@ const UserInfoContainer = styled.div`
   border-radius: 5px;
   border: 1px #eaeaea solid;
   display: flex;
+  justify-content: center;
   flex-direction: column;
   align-items: center;
 `;

@@ -50,7 +50,9 @@ const DragContent = ({ uploadedImage, isDragActive }) => {
     return <UploadedImage uploadedImage={uploadedImage} />;
   } else {
     if (isDragActive) {
-      return <p style={{ margin: 0, padding: "0 50px" }}>Drop file here</p>;
+      return (<p style={{ margin: 0, padding: "0 50px" }}>
+        Drop file here
+    </p>);
     } else {
       return (
         <p style={{ margin: 0, padding: "0 50px" }}>
@@ -61,28 +63,22 @@ const DragContent = ({ uploadedImage, isDragActive }) => {
   }
 };
 
-function MyDropzone({ storage, url, setUrl }) {
-  const [loading, setLoading] = useState(false);
-  const storageRef = storage.ref();
-
-  const [files, setFiles] = useState([]);
+function MyDropzone({ storage, url, setUrl, loading, setLoading }) {  
+  const [file, setFile] = useState([]);
   const [previewUrl, setPreviewUrl] = useState('');
 
+  const storageRef = storage.ref();
+
   const onDrop = useCallback(acceptedFiles => {
-    console.log(acceptedFiles)
-    setFiles(
+    setLoading(true);
+    setFile(
       Object.assign(acceptedFiles[0], {
         preview: URL.createObjectURL(acceptedFiles[0])
       })
     );
-
-    setLoading(true);
-    console.log(files)
-    
     const task = storageRef.child(acceptedFiles[0].name).put(acceptedFiles[0]);
     task
       .then(snapshot => {
-        console.log(snapshot);
         return snapshot.ref.getDownloadURL();
       })
       .then(url => {
@@ -92,8 +88,8 @@ function MyDropzone({ storage, url, setUrl }) {
   });
 
   useEffect(() => {
-    setPreviewUrl(files.preview);
-  }, [files])
+    setPreviewUrl(file.preview);
+  }, [file])
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop });
 

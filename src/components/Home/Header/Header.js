@@ -83,7 +83,6 @@ function Header({ logOut, user, search }) {
   const [field, setField] = useState("");
   const [focused, setFocused] = useState(false);
   const [scrolled, setScrolled] = useState(false);
-
   useEffect(() => {
     document.addEventListener("scroll", () => {
       if (window.scrollY > 20) {
@@ -122,7 +121,7 @@ function Header({ logOut, user, search }) {
       <Icons>
         <LinkIcon icon="home" to="/" />
         <LinkIcon icon="cloud_upload" to="/add" />
-        <Link to="/my-home">
+        <Link to="/my-home" onClick={() => setField("")}>
           <Avatar>
             <img src={user.photoURL} alt="" height="100%" />
           </Avatar>

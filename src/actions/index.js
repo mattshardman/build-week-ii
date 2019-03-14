@@ -104,6 +104,7 @@ export const deleteImage = id => dispatch => {
 };
 
 export const likeImage = (id, imageId, likes) => dispatch => {
+  console.log(likes.includes(id), id, likes)
   if (!likes.includes(id)) {
     dispatch({ type: types.LIKE_IMAGE, payload: { id, imageId } });
     firebase.database

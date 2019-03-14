@@ -9,7 +9,7 @@ const CardsContainer = styled.section`
   background: #fcfdff;
   margin: 0 15px;
 
-  @media(max-width: 500px) {
+  @media(max-width: 900px) {
     width: 100%;
     margin: 0;
   }

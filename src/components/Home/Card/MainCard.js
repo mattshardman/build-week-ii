@@ -7,7 +7,6 @@ const MainCardContainer = styled.div`
   box-sizing: border-box;
   height: 300px;
   width: 100%;
-  /* box-shadow: 0 3px 25px rgba(0, 0, 0, 0.19); */
   border-radius: 5px;
   border: 1px #eaeaea solid;
   padding: 15px;
@@ -43,7 +42,7 @@ const CardImg = styled.div`
   height: 100%;
   width: 100%;
   background: #eaeaea;
-  background-image: ${({ backgroundImg }) => `url(${backgroundImg}?h=300)`};
+  background-image: ${({ backgroundImg }) => `url(${backgroundImg}?h=400)`};
   background-size: cover;
   background-position: center;
   cursor: pointer;
@@ -72,7 +71,6 @@ function MainCard({
 }) {
   const [likeSection, setLikeSection] = useState(false);
   const userHasLiked = likes.includes(id);
-
   return (
     <MainCardContainer
       onMouseEnter={() => setLikeSection(true)}

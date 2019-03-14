@@ -10,12 +10,12 @@ const CardContainer = styled.div`
   position: relative;
   height: 350px;
   width: 400px;
+  max-width: 100%;
   margin: 10px;
   display: flex;
   flex-direction: column;
 
-  @media (max-width: 500px) {
-    width: 100%;
+  @media (max-width: 900px) {
     margin: 10px 0;
   }
 `;
