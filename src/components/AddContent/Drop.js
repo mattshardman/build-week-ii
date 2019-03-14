@@ -52,11 +52,15 @@ function MyDropzone({ storage, url, setUrl }) {
   const storageRef = storage.ref();
 
   const onDrop = useCallback(acceptedFiles => {
+    setUrl(acceptedFiles[0].path)
     const task = storageRef.child(acceptedFiles[0].name).put(acceptedFiles[0]);
 
     setLoading(true);
     task
-      .then(snapshot => snapshot.ref.getDownloadURL())
+      .then(snapshot => {
+        console.log(snapshot)
+        return snapshot.ref.getDownloadURL()
+      })
       .then(url => {
         setLoading(false);
         setUrl(url);

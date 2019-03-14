@@ -1,17 +1,10 @@
 import React, { useEffect } from "react";
 import { connect } from "react-redux";
 import styled from "styled-components";
-import LoadingSpinner from "../LoadingSpinner";
+
 import Cards from "./Cards";
 import UserInfo from "./UserInfo";
-
-import {
-  fetchSpecificImages,
-  deleteImage,
-  updateImage,
-  setModal,
-  likeImage
-} from "../../actions";
+import * as actions from "../../actions";
 import DemoCard from "./DemoCard";
 
 const Container = styled.div`
@@ -30,42 +23,28 @@ const MainContent = styled.div`
 `;
 
 const LoadingContainer = styled.div`
- box-sizing: border-box;
+  box-sizing: border-box;
   display: flex;
   flex-wrap: wrap;
   background: #fcfdff;
   margin: 0 15px;
 `;
 
-
-function MyHome({
-  db,
-  loading,
-  user,
-  setModal,
-  modalPhoto,
-  fetchSpecificImages,
-  userPhotos,
-  displayPhotos,
-  likeImage,
-  updateImage,
-  deleteImage
-}) {
+function MyHome(props) {
   useEffect(() => {
-    fetchSpecificImages(user.uid);
+    props.fetchSpecificImages(props.user.uid);
   }, []);
 
-  console.log(displayPhotos)
-  if (loading) {
+  if (props.loading) {
     return (
       <Container>
-        <UserInfo user={user} numberOfPhotos={0} />
+        <UserInfo user={props.user} numberOfPhotos={0} />
         <MainContent>
-        <LoadingContainer>
-          {[...Array.from("1234")].map(each => (
-            <DemoCard />
-          ))}
-        </LoadingContainer>
+          <LoadingContainer>
+            {[...Array.from("1234")].map(each => (
+              <DemoCard />
+            ))}
+          </LoadingContainer>
         </MainContent>
       </Container>
     );
@@ -73,18 +52,9 @@ function MyHome({
 
   return (
     <Container>
-      <UserInfo user={user} numberOfPhotos={displayPhotos.length} />
+      <UserInfo user={props.user} numberOfPhotos={props.displayPhotos.length} />
       <MainContent>
-        <Cards
-          photos={displayPhotos}
-          db={db}
-          modalPhoto={modalPhoto}
-          setModal={setModal}
-          likeImage={likeImage}
-          updateImage={updateImage}
-          deleteImage={deleteImage}
-          canDelete
-        />
+        <Cards {...props} photos={props.displayPhotos} canDelete />
       </MainContent>
     </Container>
   );
@@ -92,5 +62,5 @@ function MyHome({
 
 export default connect(
   st => st,
-  { fetchSpecificImages, deleteImage, updateImage, setModal, likeImage }
+  actions
 )(MyHome);

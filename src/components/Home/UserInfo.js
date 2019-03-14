@@ -9,7 +9,10 @@ const UserInfoContainer = styled.div`
   width: 320px;
   background: #fff;
   margin-top: 10px;
-  box-shadow: 0 3px 25px rgba(0, 0, 0, 0.19);
+  /* box-shadow: 0 3px 25px rgba(0, 0, 0, 0.19);
+   */
+  border-radius: 5px;
+  border: 1px #eaeaea solid;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -37,7 +40,7 @@ const Photo = styled.div`
 `;
 
 function UserInfo({ user, numberOfPhotos }) {
-  console.log(numberOfPhotos)
+  console.log(numberOfPhotos);
   return (
     <UserInfoContainer>
       <PhotoSection>

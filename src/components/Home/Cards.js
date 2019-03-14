@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import Card from "./Card";
+import Card from "./Card/Card";
 
 const CardsContainer = styled.section`
   box-sizing: border-box;
@@ -17,7 +17,7 @@ function Cards({
   likeImage,
   updateImage,
   deleteImage,
-  setModal
+  setModal,
 }) {
   return (
     <CardsContainer>

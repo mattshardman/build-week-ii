@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { connect } from 'react-redux';
 import styled from "styled-components";
 import { Redirect } from 'react-router-dom';
+
 import { addImage } from '../../actions';
 
 import Button from "../Button";

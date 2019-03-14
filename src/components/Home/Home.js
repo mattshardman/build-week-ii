@@ -28,7 +28,7 @@ function Home({
   displayPhotos,
   setModal,
   modalPhoto,
-  likeImage
+  likeImage,
 }) {
   if (loading) {
     return (

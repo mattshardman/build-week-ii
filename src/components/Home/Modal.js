@@ -153,7 +153,7 @@ function Modal({ user, addComment, modalPhoto, setModal, displayPhotos }) {
         <ModalImage background={modalPhoto.photo} />
         <p style={{ marginLeft: 20 }}>
           A photo by{" "}
-          <Link to={`/user/${modalPhoto.id}`} onClick={() => setModal(false)}>
+          <Link to={`/user/${modalPhoto.id}`} style={{ color: '#ff0080', textDecoration: 'none' }} onClick={() => setModal(false)}>
             {modalPhoto.user}
           </Link>
         </p>

@@ -20,7 +20,7 @@ const Background = styled.div`
   left: 0;
   height: 100vh;
   width: 100%;
-  background-image: url("https://images.unsplash.com/photo-1488442942852-33c2dd3b7528?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1950&q=80");
+  background-image: url("https://images.unsplash.com/photo-1536228891610-d27ef66f7110?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1950&q=80");
   background-size: cover;
   background-position: center;
 
@@ -31,7 +31,7 @@ const Background = styled.div`
     left: 0;
     height: 100vh;
     width: 100%;
-    background: linear-gradient(90deg, rgba(0,0,0,1) 10%, rgba(0,0,0,0));
+    /* background: linear-gradient(90deg, rgba(0,0,0,1) 10%, rgba(0,0,0,0)); */
   }
 `;
 
@@ -44,7 +44,7 @@ const LogoBox = styled.div`
 const Header = styled.h1`
   font-size: 70px;
   color: #fff;
-  text-shadow: 0 3px 25px rgba(0,0,0,0.7);
+  text-shadow: 0 3px 35px rgba(0,0,0,0.3);
 `;
 
 const Title = styled.h1`
