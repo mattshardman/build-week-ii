@@ -20,6 +20,7 @@ const AddContainer = styled.div`
 
 const Input = styled.input`
   box-sizing: border-box;
+  max-width: 95%;
   width: 400px;
   height: 40px;
   border: 1px solid #eaeaea;

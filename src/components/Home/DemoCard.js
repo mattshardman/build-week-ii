@@ -15,8 +15,9 @@ const MainCard = styled.div`
   box-sizing: border-box;
   height: 300px;
   width: 100%;
-  box-shadow: 0 3px 25px rgba(0, 0, 0, 0.19);
-  padding: 10px;
+  border: 1px #eaeaea solid;
+  border-radius: 5px;
+  padding: 15px;
   background: #fff;
   overflow: hidden;
 `;

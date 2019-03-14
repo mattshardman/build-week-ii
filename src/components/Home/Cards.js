@@ -8,6 +8,11 @@ const CardsContainer = styled.section`
   flex-wrap: wrap;
   background: #fcfdff;
   margin: 0 15px;
+
+  @media(max-width: 500px) {
+    width: 100%;
+    margin: 0;
+  }
 `;
 
 function Cards({

@@ -11,6 +11,10 @@ const Form = styled.form`
   justify-content: space-between;
   align-items: center;
   padding: 0 15px;
+
+  @media(max-width: 900px) {
+    display: none;
+  }
 `;
 
 const Input = styled.input`

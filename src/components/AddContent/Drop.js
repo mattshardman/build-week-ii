@@ -11,6 +11,7 @@ const DropArea = styled.div`
   border: 1px solid #eaeaea;
   height: 200px;
   width: 400px;
+  max-width: 95%;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -65,6 +66,7 @@ function MyDropzone({ storage, url, setUrl }) {
   const storageRef = storage.ref();
 
   const [files, setFiles] = useState([]);
+  const [previewUrl, setPreviewUrl] = useState('');
 
   const onDrop = useCallback(acceptedFiles => {
     setFiles(
@@ -82,12 +84,13 @@ function MyDropzone({ storage, url, setUrl }) {
         return snapshot.ref.getDownloadURL();
       })
       .then(url => {
+        setUrl(url);
         setLoading(false);
       });
   });
 
   useEffect(() => {
-    setUrl(files.preview);
+    setPreviewUrl(files.preview);
   }, [files])
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop });
@@ -101,7 +104,7 @@ function MyDropzone({ storage, url, setUrl }) {
       )}
       <input {...getInputProps()} />
       <DragContent
-        uploadedImage={url}
+        uploadedImage={previewUrl}
         isDragActive={isDragActive}
       />
     </DropArea>
