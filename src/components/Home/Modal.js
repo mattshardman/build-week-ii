@@ -37,26 +37,6 @@ const TitleSection = styled.div`
   align-items: center;
 `;
 
-const AvatarSection = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: flex-start;
-`;
-
-const Avatar = styled.div`
-  box-sizing: border-box;
-  height: 40px;
-  width: 40px;
-  border: none;
-  border-radius: 50%;
-  overflow: hidden;
-  background: #eaeaea;
-  background-image: ${({ background }) => `url("${background}")`};
-  background-size: cover;
-  background-position: center;
-  margin: 0 15px;
-`;
-
 const ModalImage = styled.div`
   width: 100%;
   height: 400px;
@@ -141,14 +121,6 @@ function Modal({ user, addComment, modalPhoto, setModal, displayPhotos }) {
       </ArrowButtonLeft>
       <ModalBox>
         <TitleSection>
-          <AvatarSection>
-            <Avatar background={user.photoURL} />
-            <h2>
-              {modalPhoto.name[0].toUpperCase()}
-              {modalPhoto.name.slice(1)}
-            </h2>
-          </AvatarSection>
-          <div />
         </TitleSection>
         <ModalImage background={modalPhoto.photo} />
         <p style={{ marginLeft: 20 }}>

@@ -57,7 +57,7 @@ function AddContent({ imageUploaded, db, storage, user, addImage }) {
         value={title}
         onChange={e => setTitle(e.target.value)}
       />
-      <form action="/file-upload" class="dropzone" id="my-awesome-dropzone" />
+      <form action="/file-upload" class="dropzone" />
       <MyDropzone storage={storage} url={url} setUrl={setUrl} />
       <Button clickFunction={send} label="add" />
     </AddContainer>

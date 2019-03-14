@@ -40,7 +40,6 @@ const Photo = styled.div`
 `;
 
 function UserInfo({ user, numberOfPhotos }) {
-  console.log(numberOfPhotos);
   return (
     <UserInfoContainer>
       <PhotoSection>

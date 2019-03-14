@@ -69,6 +69,7 @@ function MyDropzone({ storage, url, setUrl }) {
   const [previewUrl, setPreviewUrl] = useState('');
 
   const onDrop = useCallback(acceptedFiles => {
+    console.log(acceptedFiles)
     setFiles(
       Object.assign(acceptedFiles[0], {
         preview: URL.createObjectURL(acceptedFiles[0])
@@ -76,6 +77,7 @@ function MyDropzone({ storage, url, setUrl }) {
     );
 
     setLoading(true);
+    console.log(files)
     
     const task = storageRef.child(acceptedFiles[0].name).put(acceptedFiles[0]);
     task
@@ -84,7 +86,7 @@ function MyDropzone({ storage, url, setUrl }) {
         return snapshot.ref.getDownloadURL();
       })
       .then(url => {
-        setUrl(url);
+        setUrl(`https://banana.imgix.net/${acceptedFiles[0].name}`);
         setLoading(false);
       });
   });

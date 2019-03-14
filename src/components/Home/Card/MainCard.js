@@ -43,7 +43,7 @@ const CardImg = styled.div`
   height: 100%;
   width: 100%;
   background: #eaeaea;
-  background-image: ${({ backgroundImg }) => `url(${backgroundImg})`};
+  background-image: ${({ backgroundImg }) => `url(${backgroundImg}?h=300)`};
   background-size: cover;
   background-position: center;
   cursor: pointer;

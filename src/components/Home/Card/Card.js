@@ -43,11 +43,29 @@ const IconButton = styled.button`
   text-decoration: none;
 `;
 
+const Avatar = styled.div`
+  height: 20px;
+  width: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+  overflow: hidden;
+  margin: 0 5px;
+  border: 1px solid transparent;
+  transition: border 400ms;
+
+  :hover {
+    border: #ff0080 1px solid;
+  }
+`;
+
 function Card(props) {
   const {
     id,
     imageId,
     user,
+    avatar,
     name,
     updateImage,
     deleteImage,
@@ -62,7 +80,10 @@ function Card(props) {
       <MainCard {...props} />
       <UserInfo>
         {!editItem && (
-          <div>
+          <div style={{ display: 'flex', alignItems: 'center' }}>
+            <Avatar>
+              <img src={avatar} alt="" height="100%" />
+            </Avatar>
             {name[0].toUpperCase()}
             {name.slice(1)} by&nbsp;
             <Link

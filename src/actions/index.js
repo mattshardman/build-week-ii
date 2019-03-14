@@ -1,5 +1,6 @@
 import types from "../constants";
 import uuid from "uuid";
+import axios from "axios";
 import firebase from "../config/initFirebase";
 
 export const fetchImages = () => dispatch => {
@@ -42,24 +43,50 @@ export const fetchSpecificImages = user => dispatch => {
 export const addImage = data => dispatch => {
   console.log(data);
   const imageId = `${data.title}-${uuid()}`;
-  firebase.database
-    .collection("photos")
-    .doc(imageId)
-    .set({
-      id: data.user.uid,
-      imageId,
-      user: data.user.displayName,
-      email: data.user.email,
-      name: data.title,
-      photo: data.url,
-      likes: [],
-      comments: []
-    })
-    .then(() => {
-      dispatch({ type: types.UPLOADED_IMAGE });
-    })
-    .catch(error => {
-      console.error("Error writing document: ", error);
+  axios
+    .post(
+      "https://vision.googleapis.com/v1/images:annotate?key=AIzaSyB0GTVmekpmElG7x2HT9gBvDRlLhCaL-b0",
+      {
+        requests: [
+          {
+            image: {
+              source: {
+                imageUri: data.url
+              }
+            },
+            features: [
+              {
+                type: "LABEL_DETECTION",
+                maxResults: 10
+              }
+            ]
+          }
+        ]
+      }
+    )
+    .then(r => {
+      console.log(r.data.responses[0].labelAnnotations);
+      firebase.database
+        .collection("photos")
+        .doc(imageId)
+        .set({
+          id: data.user.uid,
+          imageId,
+          user: data.user.displayName,
+          avatar: data.user.photoURL,
+          email: data.user.email,
+          name: data.title,
+          photo: data.url,
+          likes: [],
+          comments: [],
+          tags: r.data.responses[0].labelAnnotations
+        })
+        .then(() => {
+          dispatch({ type: types.UPLOADED_IMAGE });
+        })
+        .catch(error => {
+          console.error("Error writing document: ", error);
+        });
     });
 };
 
@@ -125,6 +152,5 @@ export const addComment = ({ id, imageId, comment, comments }) => dispatch => {
 };
 
 export const search = input => dispatch => {
-  console.log(input);
   dispatch({ type: types.SEARCH, payload: { input } });
 };
