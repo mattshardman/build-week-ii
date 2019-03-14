@@ -48,6 +48,7 @@ function AddContent({ imageUploaded, db, storage, user, addImage }) {
 
   return (
     <AddContainer>
+      <img src="https://image.flaticon.com/icons/svg/138/138584.svg" alt="" width={60}/>
       <h2>Upload a photo</h2>
       <Input
         type="text"

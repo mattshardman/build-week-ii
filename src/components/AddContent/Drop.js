@@ -17,6 +17,7 @@ const DropArea = styled.div`
   text-align: center;
   cursor: pointer;
   transition: border 400ms;
+  overflow: hidden;
 
   :hover {
     outline: none;
@@ -28,9 +29,10 @@ const UploadedImage = styled.div`
   width: 100%;
   height: 100%;
   background-image: ${({ uploadedImage }) => `url("${uploadedImage}")`};
-  background-size: contain;
+  background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
+  overflow: hidden;
 `;
 
 const DragContent = ({ loading, uploadedImage, isDragActive }) => {
@@ -40,9 +42,9 @@ const DragContent = ({ loading, uploadedImage, isDragActive }) => {
     return <UploadedImage uploadedImage={uploadedImage} />;
   } else {
     if (isDragActive) {
-      return <p>Drop files here</p>;
+      return <p style={{ margin: 0, padding: '0 50px' }}>Drop file here</p>;
     } else {
-      return <p style={{ padding: '0 50px' }}>Drag 'n' drop some files here, or click to select files</p>;
+      return <p style={{ margin: 0, padding: '0 50px' }}>Drag image file here, or click to select files</p>;
     }
   }
 };
