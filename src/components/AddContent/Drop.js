@@ -51,11 +51,15 @@ function MyDropzone({ storage, url, setUrl }) {
   const [loading, setLoading] = useState(false);
   const storageRef = storage.ref();
 
+  const [files, setFiles] = useState([]);
+
   const onDrop = useCallback(acceptedFiles => {
-    setUrl(acceptedFiles[0].path)
+    setFiles(Object.assign(acceptedFiles[0], {
+      preview: URL.createObjectURL(acceptedFiles[0])
+    }));
+    setUrl(files.preview)
     const task = storageRef.child(acceptedFiles[0].name).put(acceptedFiles[0]);
 
-    setLoading(true);
     task
       .then(snapshot => {
         console.log(snapshot)
@@ -63,11 +67,12 @@ function MyDropzone({ storage, url, setUrl }) {
       })
       .then(url => {
         setLoading(false);
-        setUrl(url);
       });
   });
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop });
+
+  console.log(files)
 
   return (
     <DropArea {...getRootProps()}>
