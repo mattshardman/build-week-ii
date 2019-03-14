@@ -61,6 +61,7 @@ const CloseButton = styled.button`
 function MainCard({
   photo,
   imageId,
+  loggedInUserId,
   name,
   likes,
   likeImage,
@@ -103,7 +104,7 @@ function MainCard({
         <small>{likes.length}</small>
         <CloseButton>
           <i
-            onClick={() => likeImage(id, imageId, likes)}
+            onClick={() => likeImage(loggedInUserId, imageId, likes)}
             style={{ fontSize: 18, color: userHasLiked ? "#ff0080" : "#000" }}
             className="material-icons"
           >

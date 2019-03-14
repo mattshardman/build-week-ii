@@ -63,6 +63,7 @@ const Avatar = styled.div`
 function Card(props) {
   const {
     id,
+    loggedInUserId,
     imageId,
     user,
     avatar,

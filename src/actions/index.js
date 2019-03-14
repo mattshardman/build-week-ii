@@ -41,7 +41,6 @@ export const fetchSpecificImages = user => dispatch => {
 };
 
 export const addImage = data => dispatch => {
-  console.log(data);
   const imageId = `${data.title}-${uuid()}`;
   axios
     .post(
@@ -145,7 +144,7 @@ export const addComment = ({ id, imageId, comment, comments }) => dispatch => {
     .doc(imageId)
     .update({ comments: [...comments, comment] })
     .then(() => {
-      console.log("image updated");
+      console.log("updated");
     })
     .catch(error => {
       console.error("Error removing document: ", error);

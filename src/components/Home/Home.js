@@ -52,6 +52,7 @@ function Home({
   return (
     <Container>
       <Cards
+        user={user}
         photos={displayPhotos}
         db={db}
         setModal={setModal}

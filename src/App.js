@@ -7,7 +7,7 @@ import AddContent from "./components/AddContent/AddContent";
 import withLogin from "./components/withLogin";
 import Header from "./components/Home/Header/Header";
 import MyHome from "./components/Home/MyHome";
-import Modal from './components/Home/Modal';
+import Modal from './components/Home/Modal/Modal';
 
 const AppContainer = styled.div`
   width: 100%;
@@ -16,7 +16,9 @@ const AppContainer = styled.div`
 `;
 
 class App extends Component {
+  
   render() {
+    console.log(this.props)
     return (
       <Router>
         <AppContainer>

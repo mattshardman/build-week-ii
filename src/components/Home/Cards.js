@@ -11,6 +11,7 @@ const CardsContainer = styled.section`
 
   @media(max-width: 900px) {
     width: 100%;
+    justify-content: center;
     margin: 0;
   }
 `;
@@ -18,6 +19,7 @@ const CardsContainer = styled.section`
 function Cards({
   photos,
   db,
+  user,
   canDelete,
   likeImage,
   updateImage,
@@ -32,6 +34,7 @@ function Cards({
             <Card
               {...photo}
               db={db}
+              loggedInUserId={user.uid}
               likeImage={likeImage}
               updateImage={updateImage}
               deleteImage={deleteImage}
