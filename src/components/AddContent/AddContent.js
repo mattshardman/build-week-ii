@@ -1,7 +1,9 @@
 import React, { useState } from "react";
+import { connect } from 'react-redux';
 import styled from "styled-components";
-import uuid from 'uuid';
 import { Redirect } from 'react-router-dom';
+
+import { addImage } from '../../actions';
 
 import Button from "../Button";
 import MyDropzone from "./Drop";
@@ -32,37 +34,21 @@ const Input = styled.input`
   }
 `;
 
-function AddContent({ db, storage, user }) {
-  const [sent, setSent] = useState(false);
+function AddContent({ imageUploaded, db, storage, user, addImage }) {
   const [title, setTitle] = useState("");
   const [url, setUrl] = useState("");
 
   const send = () => {
-    const imageId = `${title}-${uuid()}`
-    db.collection("photos")
-      .doc(imageId)
-      .set({
-        id: user.uid,
-        imageId,
-        user: user.displayName,
-        email: user.email,
-        name: title,
-        photo: url
-      })
-      .then(() => {
-        setSent(true);
-      })
-      .catch(error => {
-        console.error("Error writing document: ", error);
-      });
+    addImage({ user, title, url});
   };
 
-  if(sent) {
+  if(imageUploaded) {
     return <Redirect to="/my-home" />
   }
 
   return (
     <AddContainer>
+      <img src="https://image.flaticon.com/icons/svg/138/138584.svg" alt="" width={60}/>
       <h2>Upload a photo</h2>
       <Input
         type="text"
@@ -77,4 +63,4 @@ function AddContent({ db, storage, user }) {
   );
 }
 
-export default AddContent;
+export default connect(st => st, {addImage})(AddContent);

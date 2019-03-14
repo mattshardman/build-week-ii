@@ -1,11 +1,11 @@
 import React, { useEffect } from "react";
 import { connect } from "react-redux";
 import styled from "styled-components";
-import LoadingSpinner from "../LoadingSpinner";
+
 import Cards from "./Cards";
 import UserInfo from "./UserInfo";
-
-import { fetchUserImages, deleteImage } from "../../actions";
+import * as actions from "../../actions";
+import DemoCard from "./DemoCard";
 
 const Container = styled.div`
   box-sizing: border-box;
@@ -23,36 +23,38 @@ const MainContent = styled.div`
 `;
 
 const LoadingContainer = styled.div`
+  box-sizing: border-box;
   display: flex;
-  align-items: center;
-  justify-content: center;
-  height: 100vh;
-  width: 100%;
+  flex-wrap: wrap;
+  background: #fcfdff;
+  margin: 0 15px;
 `;
 
-function MyHome({ db, user, fetchUserImages, userPhotos, deleteImage }) {
+function MyHome(props) {
   useEffect(() => {
-    fetchUserImages(user.uid);
+    props.fetchSpecificImages(props.user.uid);
   }, []);
 
-  if (!userPhotos) {
+  if (props.loading) {
     return (
-      <LoadingContainer>
-        <LoadingSpinner />
-      </LoadingContainer>
+      <Container>
+        <UserInfo user={props.user} numberOfPhotos={0} />
+        <MainContent>
+          <LoadingContainer>
+            {[...Array.from("1234")].map(each => (
+              <DemoCard />
+            ))}
+          </LoadingContainer>
+        </MainContent>
+      </Container>
     );
   }
 
   return (
     <Container>
-      <UserInfo user={user} />
+      <UserInfo user={props.user} numberOfPhotos={props.displayPhotos.length} />
       <MainContent>
-        <Cards
-          photos={userPhotos}
-          db={db}
-          deleteImage={deleteImage}
-          canDelete
-        />
+        <Cards {...props} photos={props.displayPhotos} canDelete />
       </MainContent>
     </Container>
   );
@@ -60,5 +62,5 @@ function MyHome({ db, user, fetchUserImages, userPhotos, deleteImage }) {
 
 export default connect(
   st => st,
-  { fetchUserImages, deleteImage }
+  actions
 )(MyHome);

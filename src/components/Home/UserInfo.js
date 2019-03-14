@@ -5,11 +5,14 @@ import Button from "../Button";
 
 const UserInfoContainer = styled.div`
   box-sizing: border-box;
-  height: 600px;
+  height: 300px;
   width: 320px;
   background: #fff;
   margin-top: 10px;
-  box-shadow: 0 3px 25px rgba(0, 0, 0, 0.19);
+  /* box-shadow: 0 3px 25px rgba(0, 0, 0, 0.19);
+   */
+  border-radius: 5px;
+  border: 1px #eaeaea solid;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -23,9 +26,11 @@ const PhotoSection = styled.div`
   align-items: center;
 `;
 
-const Photo = styled.img`
-  height: 60px;
-  width: 60px;
+const Photo = styled.div`
+  box-sizing: border-box;
+  height: 75px;
+  width: 75px;
+  border: none;
   border-radius: 50%;
   overflow: hidden;
   background: #eaeaea;
@@ -34,13 +39,15 @@ const Photo = styled.img`
   background-position: center;
 `;
 
-function UserInfo({ user }) {
+function UserInfo({ user, numberOfPhotos }) {
+  console.log(numberOfPhotos);
   return (
     <UserInfoContainer>
       <PhotoSection>
         <Photo background={user.photoURL} />
       </PhotoSection>
       <h2 style={{ margin: 0 }}>{user.displayName}</h2>
+      <p> Photos uploaded: {numberOfPhotos}</p>
       <Link to="/add">
         <Button label="add new photo" />
       </Link>
