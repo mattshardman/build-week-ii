@@ -6,14 +6,15 @@ import Button from "../Button";
 const UserInfoContainer = styled.div`
   box-sizing: border-box;
   height: 300px;
-  width: 320px;
+  width: 400px;
+  max-width: 100%;
   background: #fff;
   margin-top: 10px;
-  /* box-shadow: 0 3px 25px rgba(0, 0, 0, 0.19);
-   */
+  margin-bottom: 10px;
   border-radius: 5px;
   border: 1px #eaeaea solid;
   display: flex;
+  justify-content: center;
   flex-direction: column;
   align-items: center;
 `;
@@ -40,7 +41,6 @@ const Photo = styled.div`
 `;
 
 function UserInfo({ user, numberOfPhotos }) {
-  console.log(numberOfPhotos);
   return (
     <UserInfoContainer>
       <PhotoSection>

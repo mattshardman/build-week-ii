@@ -4,9 +4,11 @@ export default (state = [], action) => {
   switch (action.type) {
     case types.SEARCH:
       return state.map(each => {
+        const tagArray = each.tags.map(tag => tag.description.toLowerCase().includes(action.payload.input.toLowerCase()));
+        const tagMatch = tagArray.includes(true);
         const nameMatch = each.name.toLowerCase().includes(action.payload.input.toLowerCase());
         const userMatch = each.user.toLowerCase().includes(action.payload.input.toLowerCase());
-        if (!nameMatch && !userMatch) {
+        if (!nameMatch && !userMatch && !tagMatch) {
           return { ...each, display: false };
         }
         return { ...each, display: true };

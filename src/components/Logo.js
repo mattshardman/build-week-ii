@@ -17,7 +17,6 @@ function Logo({ scrolled }) {
         color: "#000",
         display: "flex",
         alignItems: "center",
-        width: '25%'
       }}
     >
       <img

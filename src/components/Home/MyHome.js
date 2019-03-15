@@ -14,12 +14,23 @@ const Container = styled.div`
   padding: 0 5%;
   padding-top: 100px;
   width: 100%;
+
+  @media(max-width: 900px) {
+    flex-direction: column;
+    margin: 0;
+    padding-top: 80px;
+  }
 `;
 
 const MainContent = styled.div`
   display: flex;
   width: 900px;
+  max-width: 100%;
   margin: 0px 15px;
+
+  @media(max-width: 900px) {
+   margin: 0;
+  }
 `;
 
 const LoadingContainer = styled.div`

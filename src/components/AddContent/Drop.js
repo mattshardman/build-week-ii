@@ -8,9 +8,10 @@ const DropArea = styled.div`
   position: relative;
   margin: 20px 0;
   background: #fff;
-  border: 1px solid #eaeaea;
+  border: ${({error}) => error ? '1px solid red' : '1px solid #eaeaea'};
   height: 200px;
   width: 400px;
+  max-width: 95%;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -60,50 +61,41 @@ const DragContent = ({ uploadedImage, isDragActive }) => {
   }
 };
 
-function MyDropzone({ storage, url, setUrl }) {
-  const [loading, setLoading] = useState(false);
+function MyDropzone({ storage, url, setUrl, loading, setLoading, error }) {
+  const [file, setFile] = useState('');
+  const [previewUrl, setPreviewUrl] = useState("");
+
   const storageRef = storage.ref();
 
-  const [files, setFiles] = useState([]);
-
   const onDrop = useCallback(acceptedFiles => {
-    setFiles(
-      Object.assign(acceptedFiles[0], {
-        preview: URL.createObjectURL(acceptedFiles[0])
-      })
-    );
-
     setLoading(true);
-    
+    setFile(URL.createObjectURL(acceptedFiles[0]));
     const task = storageRef.child(acceptedFiles[0].name).put(acceptedFiles[0]);
     task
       .then(snapshot => {
-        console.log(snapshot);
         return snapshot.ref.getDownloadURL();
       })
       .then(url => {
+        setUrl(`https://banana.imgix.net/${acceptedFiles[0].name}`);
         setLoading(false);
       });
   });
 
   useEffect(() => {
-    setUrl(files.preview);
-  }, [files])
+    setPreviewUrl(file);
+  }, [file]);
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop });
 
   return (
-    <DropArea {...getRootProps()}>
+    <DropArea error={error} {...getRootProps()}>
       {loading && (
         <LoadingSection>
           <LinearProgress />
         </LoadingSection>
       )}
       <input {...getInputProps()} />
-      <DragContent
-        uploadedImage={url}
-        isDragActive={isDragActive}
-      />
+      <DragContent uploadedImage={previewUrl} isDragActive={isDragActive} />
     </DropArea>
   );
 }

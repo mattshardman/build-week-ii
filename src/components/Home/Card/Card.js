@@ -6,12 +6,18 @@ import EditSection from "./EditSection";
 import MainCard from "./MainCard";
 
 const CardContainer = styled.div`
+  box-sizing: border=box;
   position: relative;
   height: 350px;
   width: 400px;
+  max-width: 100%;
   margin: 10px;
   display: flex;
   flex-direction: column;
+
+  @media (max-width: 900px) {
+    margin: 10px 0;
+  }
 `;
 
 const UserInfo = styled.div`
@@ -37,11 +43,30 @@ const IconButton = styled.button`
   text-decoration: none;
 `;
 
+const Avatar = styled.div`
+  height: 20px;
+  width: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+  overflow: hidden;
+  margin: 0 5px;
+  border: 1px solid transparent;
+  transition: border 400ms;
+
+  :hover {
+    border: #ff0080 1px solid;
+  }
+`;
+
 function Card(props) {
   const {
     id,
+    loggedInUserId,
     imageId,
     user,
+    avatar,
     name,
     updateImage,
     deleteImage,
@@ -56,7 +81,10 @@ function Card(props) {
       <MainCard {...props} />
       <UserInfo>
         {!editItem && (
-          <div>
+          <div style={{ display: 'flex', alignItems: 'center' }}>
+            <Avatar>
+              <img src={avatar} alt="" height="100%" />
+            </Avatar>
             {name[0].toUpperCase()}
             {name.slice(1)} by&nbsp;
             <Link

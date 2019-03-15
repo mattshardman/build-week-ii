@@ -8,11 +8,18 @@ const CardsContainer = styled.section`
   flex-wrap: wrap;
   background: #fcfdff;
   margin: 0 15px;
+
+  @media(max-width: 900px) {
+    width: 100%;
+    justify-content: center;
+    margin: 0;
+  }
 `;
 
 function Cards({
   photos,
   db,
+  user,
   canDelete,
   likeImage,
   updateImage,
@@ -27,6 +34,7 @@ function Cards({
             <Card
               {...photo}
               db={db}
+              loggedInUserId={user.uid}
               likeImage={likeImage}
               updateImage={updateImage}
               deleteImage={deleteImage}

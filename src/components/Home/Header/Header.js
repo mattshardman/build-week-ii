@@ -26,6 +26,18 @@ const HeaderContainer = styled.header`
   box-shadow: ${({ scrolled }) =>
     scrolled ? "0 3px 35px rgba(0, 0, 0, 0.19)" : "none"};
   transition: box-shadow 400ms;
+
+  @media (max-width: 900px) {
+    padding: 0 20px;
+  }
+`;
+
+const LogoWrapper = styled.div`
+  width: 25%;
+
+  @media (max-width: 900px) {
+    display: none;
+  }
 `;
 
 const Icons = styled.div`
@@ -33,6 +45,21 @@ const Icons = styled.div`
   justify-content: flex-end;
   align-items: center;
   width: 25%;
+
+  @media (max-width: 900px) {
+    display: none;
+  }
+`;
+
+const MobileIcons = styled.div`
+  display: none;
+
+  @media (max-width: 900px) {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
 `;
 
 const Avatar = styled.div`
@@ -52,11 +79,11 @@ const Avatar = styled.div`
   }
 `;
 
-function Header({ logOut, user, search }) {
+function Header({ logOut, user, search, match }) {
   const [field, setField] = useState("");
   const [focused, setFocused] = useState(false);
   const [scrolled, setScrolled] = useState(false);
-
+  
   useEffect(() => {
     document.addEventListener("scroll", () => {
       if (window.scrollY > 20) {
@@ -66,6 +93,10 @@ function Header({ logOut, user, search }) {
       }
     });
   }, []);
+
+  useEffect(() => {
+    setField('');
+  }, [match])
 
   const searchProps = {
     search,
@@ -77,12 +108,25 @@ function Header({ logOut, user, search }) {
 
   return (
     <HeaderContainer scrolled={scrolled}>
-      <Logo scrolled={scrolled} />
+      <MobileIcons>
+        <LinkIcon icon="person" to="/my-home" />
+        <Link to="/">
+          <img
+            src="https://image.flaticon.com/icons/svg/590/590769.svg"
+            alt=""
+            height={35}
+          />
+        </Link>
+        <LinkIcon icon="cloud_upload" to="/add" />
+      </MobileIcons>
+      <LogoWrapper>
+        <Logo scrolled={scrolled} />
+      </LogoWrapper>
       <Search {...searchProps} />
       <Icons>
         <LinkIcon icon="home" to="/" />
         <LinkIcon icon="cloud_upload" to="/add" />
-        <Link to="/my-home">
+        <Link to="/my-home" onClick={() => setField("")}>
           <Avatar>
             <img src={user.photoURL} alt="" height="100%" />
           </Avatar>
@@ -96,7 +140,7 @@ function Header({ logOut, user, search }) {
 Header.propTypes = {
   logOut: PropTypes.func.isRequired,
   user: PropTypes.shape().isRequired,
-  search: PropTypes.func.isRequired,
+  search: PropTypes.func.isRequired
 };
 
 export default connect(
