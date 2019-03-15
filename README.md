@@ -1,3 +1,16 @@
+## Banana - photo sharing application
+
+This project was completed as the Lambda front end build week project and has the following features:
+
+* Login with Facebook or Google (via base).
+* Image upload using drag and drog to google cloud bucket
+* Document and image ref upload to firebase firestore
+* Serving of images via Imgir to allow image size to modified 
+* Labeling of images on upload using google vision API (allows images to be searched with manual labeling)
+* State is stored using redux
+
+## Project set up
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
