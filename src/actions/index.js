@@ -1,5 +1,6 @@
 import types from "../constants";
 import uuid from "uuid";
+import { visionApi } from "./functions";
 import firebase from "../config/initFirebase";
 
 export const fetchImages = () => dispatch => {
@@ -15,7 +16,7 @@ export const fetchImages = () => dispatch => {
       dispatch({ type: types.FETCH_IMAGES, payload: { photos } });
       dispatch({ type: types.FINISHED_LOADING });
     })
-    .catch(function(error) {
+    .catch(error => {
       console.log("Error getting documents: ", error);
     });
 };
@@ -40,27 +41,30 @@ export const fetchSpecificImages = user => dispatch => {
 };
 
 export const addImage = data => dispatch => {
-  console.log(data);
   const imageId = `${data.title}-${uuid()}`;
-  firebase.database
-    .collection("photos")
-    .doc(imageId)
-    .set({
-      id: data.user.uid,
-      imageId,
-      user: data.user.displayName,
-      email: data.user.email,
-      name: data.title,
-      photo: data.url,
-      likes: [],
-      comments: []
-    })
-    .then(() => {
-      dispatch({ type: types.UPLOADED_IMAGE });
-    })
-    .catch(error => {
-      console.error("Error writing document: ", error);
-    });
+  visionApi(data.url).then(r => {
+    firebase.database
+      .collection("photos")
+      .doc(imageId)
+      .set({
+        id: data.user.uid,
+        imageId,
+        user: data.user.displayName,
+        avatar: data.user.photoURL,
+        email: data.user.email,
+        name: data.title,
+        photo: data.url,
+        likes: [],
+        comments: [],
+        tags: r.data.responses[0].labelAnnotations
+      })
+      .then(() => {
+        dispatch({ type: types.UPLOADED_IMAGE });
+      })
+      .catch(error => {
+        console.error("Error writing document: ", error);
+      });
+  });
 };
 
 export const deleteImage = id => dispatch => {
@@ -111,13 +115,12 @@ export const setModal = image => dispatch => {
 
 export const addComment = ({ id, imageId, comment, comments }) => dispatch => {
   dispatch({ type: types.ADD_COMMENT, payload: { id, imageId, comment } });
-
   firebase.database
     .collection("photos")
     .doc(imageId)
     .update({ comments: [...comments, comment] })
     .then(() => {
-      console.log("image updated");
+      console.log("updated");
     })
     .catch(error => {
       console.error("Error removing document: ", error);
@@ -125,6 +128,5 @@ export const addComment = ({ id, imageId, comment, comments }) => dispatch => {
 };
 
 export const search = input => dispatch => {
-  console.log(input);
   dispatch({ type: types.SEARCH, payload: { input } });
 };
