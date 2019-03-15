@@ -22,7 +22,7 @@ class App extends Component {
     return (
       <Router>
         <AppContainer>
-          <Header {...this.props} />
+          <Route path="/" render={(props => <Header {...props} {...this.props}/>)} />
           <Route
             exact
             path="/"

@@ -8,7 +8,7 @@ const DropArea = styled.div`
   position: relative;
   margin: 20px 0;
   background: #fff;
-  border: 1px solid #eaeaea;
+  border: ${({error}) => error ? '1px solid red' : '1px solid #eaeaea'};
   height: 200px;
   width: 400px;
   max-width: 95%;
@@ -50,9 +50,7 @@ const DragContent = ({ uploadedImage, isDragActive }) => {
     return <UploadedImage uploadedImage={uploadedImage} />;
   } else {
     if (isDragActive) {
-      return (<p style={{ margin: 0, padding: "0 50px" }}>
-        Drop file here
-    </p>);
+      return <p style={{ margin: 0, padding: "0 50px" }}>Drop file here</p>;
     } else {
       return (
         <p style={{ margin: 0, padding: "0 50px" }}>
@@ -63,19 +61,15 @@ const DragContent = ({ uploadedImage, isDragActive }) => {
   }
 };
 
-function MyDropzone({ storage, url, setUrl, loading, setLoading }) {  
-  const [file, setFile] = useState([]);
-  const [previewUrl, setPreviewUrl] = useState('');
+function MyDropzone({ storage, url, setUrl, loading, setLoading, error }) {
+  const [file, setFile] = useState('');
+  const [previewUrl, setPreviewUrl] = useState("");
 
   const storageRef = storage.ref();
 
   const onDrop = useCallback(acceptedFiles => {
     setLoading(true);
-    setFile(
-      Object.assign(acceptedFiles[0], {
-        preview: URL.createObjectURL(acceptedFiles[0])
-      })
-    );
+    setFile(URL.createObjectURL(acceptedFiles[0]));
     const task = storageRef.child(acceptedFiles[0].name).put(acceptedFiles[0]);
     task
       .then(snapshot => {
@@ -88,23 +82,20 @@ function MyDropzone({ storage, url, setUrl, loading, setLoading }) {
   });
 
   useEffect(() => {
-    setPreviewUrl(file.preview);
-  }, [file])
+    setPreviewUrl(file);
+  }, [file]);
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop });
 
   return (
-    <DropArea {...getRootProps()}>
+    <DropArea error={error} {...getRootProps()}>
       {loading && (
         <LoadingSection>
           <LinearProgress />
         </LoadingSection>
       )}
       <input {...getInputProps()} />
-      <DragContent
-        uploadedImage={previewUrl}
-        isDragActive={isDragActive}
-      />
+      <DragContent uploadedImage={previewUrl} isDragActive={isDragActive} />
     </DropArea>
   );
 }

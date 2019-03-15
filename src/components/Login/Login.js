@@ -2,7 +2,6 @@ import React from "react";
 import PropTypes from "prop-types";
 import styled from "styled-components";
 import LoginBox from "./LoginBox";
-import Logo from "../Logo";
 
 const LoginContainer = styled.div`
   height: 100vh;
@@ -39,11 +38,16 @@ const LogoBox = styled.div`
   position: absolute;
   top: 0;
   left: 40px;
+
+  @media(max-width: 900px) {
+    left: 20px;
+  }
 `;
 
 const Header = styled.h1`
   font-size: 70px;
   color: #fff;
+  text-align: center;
   text-shadow: 0 3px 35px rgba(0,0,0,0.3);
 `;
 
@@ -75,7 +79,7 @@ function Login({ logIn, loading }) {
           <Title>Banana</Title>
         </div>
       </LogoBox>
-          <Header>Photo Sharing</Header>
+          <Header>Photo Sharing Made Easy</Header>
       <LoginBox logIn={logIn} loading={loading} />
       <Background />
     </LoginContainer>

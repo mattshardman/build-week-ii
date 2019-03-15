@@ -1,6 +1,6 @@
 import types from "../constants";
 import uuid from "uuid";
-import axios from "axios";
+import { visionApi } from "./functions";
 import firebase from "../config/initFirebase";
 
 export const fetchImages = () => dispatch => {
@@ -16,7 +16,7 @@ export const fetchImages = () => dispatch => {
       dispatch({ type: types.FETCH_IMAGES, payload: { photos } });
       dispatch({ type: types.FINISHED_LOADING });
     })
-    .catch(function(error) {
+    .catch(error => {
       console.log("Error getting documents: ", error);
     });
 };
@@ -42,51 +42,29 @@ export const fetchSpecificImages = user => dispatch => {
 
 export const addImage = data => dispatch => {
   const imageId = `${data.title}-${uuid()}`;
-  axios
-    .post(
-      "https://vision.googleapis.com/v1/images:annotate?key=AIzaSyB0GTVmekpmElG7x2HT9gBvDRlLhCaL-b0",
-      {
-        requests: [
-          {
-            image: {
-              source: {
-                imageUri: data.url
-              }
-            },
-            features: [
-              {
-                type: "LABEL_DETECTION",
-                maxResults: 10
-              }
-            ]
-          }
-        ]
-      }
-    )
-    .then(r => {
-      console.log(r.data.responses[0].labelAnnotations);
-      firebase.database
-        .collection("photos")
-        .doc(imageId)
-        .set({
-          id: data.user.uid,
-          imageId,
-          user: data.user.displayName,
-          avatar: data.user.photoURL,
-          email: data.user.email,
-          name: data.title,
-          photo: data.url,
-          likes: [],
-          comments: [],
-          tags: r.data.responses[0].labelAnnotations
-        })
-        .then(() => {
-          dispatch({ type: types.UPLOADED_IMAGE });
-        })
-        .catch(error => {
-          console.error("Error writing document: ", error);
-        });
-    });
+  visionApi(data.url).then(r => {
+    firebase.database
+      .collection("photos")
+      .doc(imageId)
+      .set({
+        id: data.user.uid,
+        imageId,
+        user: data.user.displayName,
+        avatar: data.user.photoURL,
+        email: data.user.email,
+        name: data.title,
+        photo: data.url,
+        likes: [],
+        comments: [],
+        tags: r.data.responses[0].labelAnnotations
+      })
+      .then(() => {
+        dispatch({ type: types.UPLOADED_IMAGE });
+      })
+      .catch(error => {
+        console.error("Error writing document: ", error);
+      });
+  });
 };
 
 export const deleteImage = id => dispatch => {
@@ -103,7 +81,6 @@ export const deleteImage = id => dispatch => {
 };
 
 export const likeImage = (id, imageId, likes) => dispatch => {
-  console.log(likes.includes(id), id, likes)
   if (!likes.includes(id)) {
     dispatch({ type: types.LIKE_IMAGE, payload: { id, imageId } });
     firebase.database
@@ -138,7 +115,6 @@ export const setModal = image => dispatch => {
 
 export const addComment = ({ id, imageId, comment, comments }) => dispatch => {
   dispatch({ type: types.ADD_COMMENT, payload: { id, imageId, comment } });
-
   firebase.database
     .collection("photos")
     .doc(imageId)
