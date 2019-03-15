@@ -2,7 +2,7 @@
 
 This project was completed as the Lambda front end build week project and has the following features:
 
-* Login with Facebook or Google (via base).
+* Login with Facebook or Google (via firebase).
 * Image upload using drag and drog to google cloud bucket
 * Document and image ref upload to firebase firestore
 * Serving of images via Imgir to allow image size to modified 
